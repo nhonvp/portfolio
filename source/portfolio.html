@@ -1,0 +1,739 @@
+<title>Phạm Văn Nhơn Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;800&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Concept: one real 3D phone lives behind the whole page. Scrolling through "Dự án" is a pinned scene:
+   the phone spins, swaps its screen and relights in each project's colour while the text beside it changes.
+   Committed dark look; four project hues carry identity. */
+:root{
+  --bg:#070B18; --surface:#10162E; --surface2:#182044; --ink:#EDF0FF; --muted:#9AA3C7; --line:#252D55;
+  --a1:#FF6B8B; --a2:#FFC857; --a3:#36D7C0; --a4:#8B7CFF; --on-a1:#1C0710;
+  --f-display:'Bricolage Grotesque','Be Vietnam Pro',system-ui,sans-serif;
+  --f-body:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0;overflow-x:hidden}
+.wrap{max-width:1120px;margin:0 auto;position:relative;z-index:2}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--a1);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.04;text-wrap:balance}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+#gl{position:fixed;inset:0;width:100vw;height:100vh;z-index:1;pointer-events:none}
+#bar{position:fixed;left:0;top:env(safe-area-inset-top,0px);height:3px;width:0;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));z-index:50}
+.skip{position:fixed;left:16px;top:-60px;z-index:100;background:var(--a1);color:var(--on-a1);padding:10px 16px;border-radius:999px;font-weight:600;text-decoration:none}
+.skip:focus{top:calc(12px + env(safe-area-inset-top,0px))}
+.cur{position:fixed;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:1.5px solid var(--a1);pointer-events:none;z-index:60;opacity:0;transition:opacity .2s,width .2s,height .2s,margin .2s,background .2s}
+.cur.on{opacity:.9}.cur.big{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(255,107,139,.14)}
+@media (hover:none){.cur{display:none}}
+
+.loader{position:fixed;inset:0;z-index:90;background:var(--bg);display:none;place-content:center;text-align:center;gap:10px}
+.js-load .loader{display:grid}
+.loader div{font-family:var(--f-display);font-weight:800;font-size:clamp(80px,18vw,180px);letter-spacing:-.04em;line-height:1;display:flex;justify-content:center;align-items:baseline}
+.loader b{background:linear-gradient(120deg,var(--a1),var(--a2),var(--a3));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.loader span{color:var(--muted);font-size:.4em;margin-left:6px}
+.loader small{font-family:var(--f-mono);color:var(--muted);letter-spacing:.1em;font-size:12px;text-transform:uppercase}
+
+header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:20px;letter-spacing:-.01em;cursor:pointer;background:none;border:0;color:inherit;padding:0}
+.brand i{font-style:normal;color:var(--a1)}
+nav{display:flex;gap:6px;margin-left:auto;margin-right:16px}
+nav a{font-size:14px;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:999px;transition:background .2s,color .2s}
+nav a:hover{background:var(--surface2);color:var(--ink)}
+
+/* HERO */
+.hero{min-height:calc(100vh - 80px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:center;padding-block:24px 56px}
+.hero h1{font-size:clamp(38px,4.9vw,72px);font-weight:800;letter-spacing:-.04em;line-height:1;margin:20px 0 26px}
+@media (min-width:900px){.hero h1 .ln{white-space:nowrap}}
+.ln{display:block;overflow:hidden;padding-top:.14em;margin-top:-.14em;padding-bottom:.08em}
+.ln>span{display:inline-block}
+.grad{background:linear-gradient(100deg,var(--a1),var(--a2),var(--a3),var(--a1));background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:slide 6s linear infinite}
+@keyframes slide{to{background-position:250% 0}}
+.hero p.lead{font-size:18px;color:var(--muted);max-width:50ch;margin:0 0 30px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--a1);transition:box-shadow .2s}
+.btn.primary{background:var(--a1);color:var(--on-a1)}
+.btn.primary:hover{box-shadow:0 10px 34px -8px var(--a1)}
+.btn.ghost{color:var(--ink);border-color:var(--line);background:rgba(7,11,24,.5)}
+.btn.ghost:hover{border-color:var(--ink)}
+.hint{position:absolute;left:0;bottom:18px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:flex;gap:10px;align-items:center}
+.hint i{display:block;width:1px;height:34px;background:linear-gradient(var(--a1),transparent);animation:drip 2s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.herowrap{position:relative}
+
+.proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);background:rgba(7,11,24,.72);backdrop-filter:blur(8px)}
+.proof div{padding:22px 20px 22px 0;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.proof div+div{padding-left:24px}.proof div:last-child{border-right:0}
+.proof b{font-family:var(--f-display);font-size:clamp(34px,5vw,54px);font-weight:800;letter-spacing:-.03em;line-height:1;background:linear-gradient(120deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.proof span{font-size:13.5px;color:var(--muted)}
+
+.marq{overflow:hidden;border-block:1px solid var(--line);padding-block:18px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);background:rgba(7,11,24,.72)}
+.track{display:flex;gap:44px;width:max-content;animation:marq 32s linear infinite;font-family:var(--f-display);font-size:28px;font-weight:600;color:var(--muted)}
+.track span{display:flex;align-items:center;gap:44px;white-space:nowrap}
+.track span::after{content:"✦";color:var(--a1);font-size:18px}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* STORY (pinned 3D scene) */
+.story{position:relative;z-index:2}
+.story-inner{position:relative}
+.story .head{padding-block:72px 28px}
+.story .head h2,.sec-head h2{font-size:clamp(34px,5vw,62px);font-weight:800;letter-spacing:-.03em;margin-top:10px}
+.story .head p,.sec-head p{color:var(--muted);margin:14px 0 0;max-width:56ch}
+.panel{margin-bottom:56px;max-width:520px;padding:26px;border-radius:22px;background:rgba(16,22,46,.78);border:1px solid var(--line)}
+.kind{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+.panel h3{font-size:clamp(40px,5.4vw,72px);font-weight:800;letter-spacing:-.035em;margin:10px 0 14px}
+.role{display:inline-block;align-self:flex-start;font-size:12.5px;font-weight:600;padding:4px 12px;border-radius:999px;background:var(--c);color:#0B0F20;margin-bottom:18px}
+.pts{margin:0 0 20px;padding:0;list-style:none;display:grid;gap:12px}
+.pts li{padding-left:22px;position:relative;color:#B9C1E0;font-size:15.5px}
+.pts li::before{content:"";position:absolute;left:0;top:.75em;width:10px;height:2px;background:var(--c);border-radius:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.tags li{font-family:var(--f-mono);font-size:11.5px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink)}
+.cs{margin:0 0 18px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;width:100%;min-width:0}
+.cs div,.cs dd{min-width:0;overflow-wrap:anywhere}
+.cs div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px}
+.cs dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--c);padding-top:4px}
+.cs dd{margin:0;color:#C3CBE8;font-size:14.5px;line-height:1.55}
+.panel .go{display:inline-flex;margin-top:18px;color:var(--c);font-weight:600;text-decoration:none;font-size:14.5px;border-bottom:1px solid var(--c);align-self:flex-start;padding-bottom:2px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:rgba(16,22,46,.7);backdrop-filter:blur(6px)}
+.lang button{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;border:0;background:none;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--a1);color:var(--on-a1);font-weight:500}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.links:empty{display:none}
+.links a{font-size:13px;font-weight:600;text-decoration:none;padding:7px 14px;border-radius:999px;border:1px solid var(--c);color:var(--c);transition:background .2s,color .2s}
+.links a:hover{background:var(--c);color:#0B0F20}
+.contact-h{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-top:0;position:relative;z-index:1}
+.contact{display:flex;flex-wrap:wrap;gap:10px;position:relative;z-index:1}
+.contact a,.contact button{font:inherit;font-size:14px;font-weight:600;color:#fff;text-decoration:none;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.42);border-radius:999px;padding:9px 16px;cursor:pointer;transition:background .2s}
+.contact a:hover,.contact button:hover{background:rgba(255,255,255,.3)}
+.dock{position:fixed;right:max(18px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:14px}
+.dock a{position:relative;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(16,22,46,.86);border:1px solid var(--line);color:var(--ink);backdrop-filter:blur(8px);box-shadow:0 10px 26px -12px rgba(0,0,0,.7);transition:transform .2s,background .2s,border-color .2s,color .2s}
+.dock a svg{width:32px;height:32px;display:block}
+.dock a:hover,.dock a:focus-visible{transform:translateX(-4px) scale(1.06);background:var(--bc);border-color:var(--bc);color:#fff}
+.dock a::after{content:attr(data-tip);position:absolute;right:calc(100% + 14px);top:50%;transform:translateY(-50%) translateX(6px);background:var(--surface2);color:var(--ink);font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;border:1px solid var(--line)}
+.dock a:hover::after,.dock a:focus-visible::after{opacity:1;transform:translateY(-50%)}
+.dock:empty{display:none}
+@media (max-width:640px){.dock{gap:10px;right:max(10px,env(safe-area-inset-right,0px));top:calc(84px + env(safe-area-inset-top,0px));transform:none}.dock a{width:52px;height:52px}.dock a svg{width:26px;height:26px}.dock a::after{display:none}}
+.vl{display:none}
+.vl.on{display:inline-flex}
+.fallnote{font-size:13px;color:var(--muted);margin:0 0 28px}
+.gl-on .fallnote{display:none}
+.counter{display:none}
+.gl-on .story-inner{height:100vh;overflow-x:clip}
+.gl-on .panel{position:absolute;left:0;top:0;bottom:0;width:min(470px,42%);margin:0;display:flex;flex-direction:column;justify-content:center;opacity:0;visibility:hidden;background:none;border:0;padding:0}
+.gl-on .panel.active{opacity:1;visibility:visible}
+.gl-on .story .head{position:absolute;top:0;left:0;padding:36px 0 0;z-index:3}
+.gl-on .story .head h2{font-size:clamp(22px,2.6vw,32px)}
+.gl-on .story .head p{display:none}
+.gl-on .counter{display:flex;position:absolute;left:0;bottom:26px;gap:16px;align-items:center;font-family:var(--f-mono);font-size:13px;color:var(--muted);z-index:3;width:min(470px,42%)}
+.counter .trk{flex:1;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
+.counter .trk i{display:block;height:100%;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));transform-origin:left;transform:scaleX(0)}
+.counter b{color:var(--ink)}
+
+section.s{padding-block:88px 24px;position:relative;z-index:2}
+.sec-head{margin-bottom:44px;max-width:720px}
+.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.skill{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;overflow:hidden;transition:transform .25s,border-color .25s}
+.skill::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--x,50%) var(--y,0%),var(--c),transparent 70%);opacity:0;transition:opacity .25s;pointer-events:none}
+.skill:hover{transform:translateY(-4px);border-color:var(--c)}
+.skill:hover::before{opacity:.2}
+.skill .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--c);color:#0B0F20;font-family:var(--f-mono);font-size:13px;margin-bottom:16px;position:relative}
+.skill h3{font-size:21px;margin-bottom:8px;position:relative}
+.skill p{margin:0 0 14px;color:var(--muted);font-size:14.5px;position:relative}
+.skill .tags{position:relative}
+.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none;counter-reset:s}
+.flow li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;font-size:13.5px;color:var(--muted)}
+.flow li::before{content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--a1);color:var(--on-a1);font-family:var(--f-mono);font-size:13px;margin-bottom:12px}
+.flow li strong{display:block;color:var(--ink);font-family:var(--f-display);font-size:17px;margin-bottom:4px}
+.built,.svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.svc .card{display:flex;flex-direction:column}
+.svc .kind{margin-bottom:8px}
+.svc h3{font-size:23px;margin-bottom:12px}
+.get{margin:0 0 18px;padding:0;list-style:none;display:grid;gap:10px;flex:1;align-content:start}
+.get li{position:relative;padding-left:20px;color:#B9C1E0;font-size:14px;line-height:1.55}
+.get li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:2px;background:var(--c);border-radius:2px}
+.price{font-family:var(--f-mono);font-size:13px;color:var(--ink);border-top:1px solid var(--line);padding-top:14px}
+.svc .go{display:inline-flex;margin-top:12px;color:var(--c);font-weight:600;text-decoration:none;font-size:14.5px;border-bottom:1px solid var(--c);align-self:flex-start}
+.need{margin-top:20px;background:var(--surface);border:1px dashed var(--line);border-radius:20px;padding:24px}
+.need h3{font-size:20px;margin-bottom:12px}
+.need ul{margin:0;padding-left:18px;color:var(--muted);display:grid;gap:6px;font-size:14.5px}
+@media (max-width:1100px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.svc{grid-template-columns:minmax(0,1fr)}}
+.webgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.webgrid .card .kind{margin-bottom:8px}
+.webgrid .card h3{font-size:24px}
+.webgrid .card p{margin:0 0 16px}
+.webgrid .card .go{display:inline-flex;margin-top:18px;color:var(--c);font-weight:600;text-decoration:none;font-size:14.5px;border-bottom:1px solid var(--c)}
+.about{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.about{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px}
+.card h3{font-size:21px;margin-bottom:10px}
+.built .card h3{font-family:var(--f-mono);font-size:13px;font-weight:500;color:var(--a1);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.card p{margin:0;color:var(--muted);font-size:14.5px}
+.card ul{margin:0;padding-left:18px;color:var(--muted);display:grid;gap:6px}
+.card ul.tags{display:flex;padding-left:0;gap:6px;color:var(--ink)}
+.cta-band{margin-block:96px 40px;border-radius:36px;padding:clamp(32px,6vw,72px);background:linear-gradient(120deg,var(--a1),var(--a4));color:#fff;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px;align-items:center;position:relative;overflow:hidden;z-index:2}
+.cta-band::after{content:"";position:absolute;right:-80px;top:-80px;width:300px;height:300px;border-radius:50%;border:40px solid rgba(255,255,255,.12);border-top-color:rgba(255,255,255,.35);animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cta-band h2{font-size:clamp(34px,5vw,64px);font-weight:800;letter-spacing:-.03em;margin-bottom:12px}
+.cta-band p{margin:0;max-width:46ch;opacity:.95}
+.ask{display:grid;gap:10px;margin:18px 0 0;padding:0;list-style:none;position:relative;z-index:1}
+.ask li{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:14px;padding:12px 16px;font-size:14.5px}
+.cta-band .btn{background:#fff;color:#14172E;border-color:#fff;position:relative;z-index:1}
+.small{font-size:13px;color:var(--muted);padding-bottom:40px;position:relative;z-index:2}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr);align-items:end;padding-bottom:40px}
+  .hero p.lead{font-size:16px}
+  .proof{grid-template-columns:repeat(2,minmax(0,1fr))}.proof div:nth-child(2){border-right:0}.proof div:nth-child(3){padding-left:0;border-top:1px solid var(--line)}.proof div:nth-child(4){border-top:1px solid var(--line)}
+  nav{display:none}
+  .skills,.built,.about,.webgrid{grid-template-columns:minmax(0,1fr)}
+  .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cta-band{grid-template-columns:minmax(0,1fr)}
+  .gl-on .panel{top:auto;bottom:0;left:0;right:0;width:auto;padding:70px 0 70px;justify-content:flex-end;background:linear-gradient(transparent,var(--bg) 38%)}
+  .gl-on .panel h3{font-size:40px;margin:6px 0 10px}
+  .gl-on .cs div:nth-child(2){display:none}
+  .gl-on .cs dd{font-size:13.5px}
+  .gl-on .cs div{grid-template-columns:84px minmax(0,1fr)}
+  .gl-on .counter{width:auto;right:0;bottom:30px}
+  .gl-on .panel{max-width:100%;min-width:0}
+  .hero>div:first-child{background:linear-gradient(transparent,rgba(7,11,24,.88) 22%);padding-top:56px;margin-inline:-16px;padding-inline:16px}
+  .gl-on .story .head{padding-top:20px}
+  section.s{padding-block:64px 16px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<a class="skip" href="#du-an">Bỏ qua, xem dự án</a>
+<div id="bar"></div>
+<div class="cur" id="cur"></div>
+<nav class="dock" id="dock" aria-label="Liên hệ nhanh / Quick contact"></nav>
+<div class="loader" id="loader" aria-hidden="true"><div><b id="lpct">0</b><span>%</span></div><small>đang dựng giao diện…</small></div>
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<div class="wrap">
+  <header class="top">
+    <button class="brand" id="brand" type="button" title="Bấm để xoay điện thoại" aria-label="Xoay điện thoại 3D">nhơn<i>.</i>dev</button>
+    <nav><a href="#du-an">Dự án</a><a href="#dich-vu">Dịch vụ</a><a href="#nang-luc">Năng lực</a><a href="#quy-trinh">Quy trình</a><a href="#hop-tac">Hợp tác</a></nav>
+    <div class="lang" role="group" aria-label="Ngôn ngữ / Language"><button type="button" data-l="vi" aria-pressed="true">VI</button><button type="button" data-l="en" aria-pressed="false">EN</button></div>
+  </header>
+
+  <div class="herowrap">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Phạm Văn Nhơn · Mobile · Web · Full-stack · TP. Hồ Chí Minh</div>
+        <h1 class="hl"><span class="ln"><span>Web & app</span></span><span class="ln"><span class="grad">đã chạy thật,</span></span><span class="ln"><span>làm trọn từ API.</span></span></h1>
+        <p class="lead">Gần 6 năm làm app mobile (React Native, Flutter, Kotlin) và 1 năm full-stack với NestJS, Next.js, React, WordPress. Một người lo trọn API, trang web, trang admin và app.</p>
+        <div class="cta">
+          <a class="btn primary" href="#du-an">Xem dự án ↓</a>
+          <a class="btn ghost" href="https://github.com/nhonvp" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </div>
+      <div></div>
+    </div>
+    <div class="hint"><i></i>Cuộn để xem điện thoại chạy</div>
+  </div>
+
+  <div class="proof">
+    <div><b data-n="6" data-pre="~">~6</b><span>năm làm app mobile</span></div>
+    <div><b data-n="3">3</b><span>dự án freelance làm trọn gói</span></div>
+    <div><b data-n="4">4</b><span>mảng việc: mobile · web · backend · POS</span></div>
+    <div><b data-n="1">1</b><span>người lo từ API đến store và trang web</span></div>
+  </div>
+</div>
+
+<div class="marq" aria-hidden="true" style="position:relative;z-index:2"><div class="track">
+  <span>React Native</span><span>Flutter</span><span>Kotlin</span><span>Next.js</span><span>React</span><span>WordPress</span><span>NestJS</span><span>Laravel</span><span>TypeScript</span><span>PostgreSQL</span><span>Mapbox GL</span><span>Firebase</span>
+  <span>React Native</span><span>Flutter</span><span>Kotlin</span><span>Next.js</span><span>React</span><span>WordPress</span><span>NestJS</span><span>Laravel</span><span>TypeScript</span><span>PostgreSQL</span><span>Mapbox GL</span><span>Firebase</span>
+</div></div>
+
+<div class="wrap">
+  <section class="story" id="du-an">
+    <div class="story-inner">
+      <div class="head"><div class="eyebrow">Dự án</div><h2>Dự án nổi bật.</h2><p>Các app và website mình đã tham gia làm. Màn hình điện thoại minh họa một tính năng thật của từng dự án.</p></div>
+      <p class="fallnote">Trình duyệt này không hiển thị được cảnh 3D, nên các dự án được liệt kê dạng danh sách.</p>
+
+      <article class="panel" data-screen="pos" style="--c:var(--a1)" data-hue="#FF6B8B">
+        <div class="kind">Công ty · Hệ thống POS</div><h3>RICH Salon POS</h3><span class="role">Mobile Engineer</span>
+        <dl class="cs"><div><dt>Bài toán</dt><dd>Cửa hàng cần bán hàng, in hóa đơn và thanh toán ổn định, kể cả khi mất mạng.</dd></div><div><dt>Mình làm</dt><dd>React Native cho Android, iOS, Clover, cập nhật nóng bằng CodePush. Bản Kotlin cho PAX, Sunmi, Clover, Valor: máy in nhiệt ESC/POS, ngăn kéo tiền, quét mã, offline-first bằng Room.</dd></div><div><dt>Khách nhận</dt><dd>App chạy trên thiết bị POS thật, có unit test, E2E và pipeline build tự động.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App bán hàng hoặc POS cần tích hợp máy in và máy thanh toán.</dd></div></dl>
+        <ul class="tags"><li>React Native</li><li>Kotlin</li><li>Room</li><li>CameraX</li><li>CI/CD</li></ul>
+        <div class="links" data-for="pos"></div>
+        <a class="go" href="#hop-tac">Làm app tương tự →</a>
+      </article>
+      <article class="panel" data-screen="quip" style="--c:var(--a4)" data-hue="#8B7CFF">
+        <div class="kind">Công ty · Đặt thuê đồ cho trẻ</div><h3>BabyQuip</h3><span class="role">Mobile Engineer</span>
+        <dl class="cs"><div><dt>Bài toán</dt><dd>Gia đình cần thuê đồ cho trẻ khi đi du lịch, đặt lịch và nhắn với nhà cung cấp ngay trong app.</dd></div><div><dt>Mình làm</dt><dd>Tham gia từ đầu đến khi phát hành trong team 14 người: phát triển luồng đặt thuê, tích hợp Stripe và Google Maps SDK, thông báo đẩy, Socket.io, theo dõi lỗi bằng Sentry, viết unit test và tối ưu hiệu năng.</dd></div><div><dt>Khách nhận</dt><dd>App React Native chạy trên iOS và Android, đã có trên App Store và Google Play.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App đặt lịch hoặc marketplace có thanh toán Stripe và bản đồ.</dd></div></dl>
+        <ul class="tags"><li>React Native</li><li>Redux-Saga</li><li>Stripe</li><li>Google Maps</li><li>Sentry</li></ul>
+        <div class="links" data-for="babyquip"></div>
+        <a class="go" href="#hop-tac">Làm app tương tự →</a>
+      </article>
+      <article class="panel" data-screen="gold" style="--c:var(--a2)" data-hue="#FFC857">
+        <div class="kind">Freelance · Backend + Admin + App</div><h3>SaviGold</h3><span class="role">Full-stack</span>
+        <dl class="cs"><div><dt>Bài toán</dt><dd>Người dùng cần theo dõi giá vàng, biết lãi/lỗ danh mục và được báo khi giá chạm mức đã đặt.</dd></div><div><dt>Mình làm</dt><dd>Backend NestJS có bộ thu thập giá chạy theo lịch và gửi thông báo FCM. Sổ vàng, chat cộng đồng, trang admin và app Flutter (Dio tự làm mới token, đăng nhập Apple).</dd></div><div><dt>Khách nhận</dt><dd>API, trang admin và app iOS/Android trọn gói từ một người.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App có thông báo theo điều kiện, dữ liệu cập nhật theo lịch, kèm trang quản trị.</dd></div></dl>
+        <ul class="tags"><li>NestJS</li><li>PostgreSQL</li><li>TypeORM</li><li>Next.js</li><li>Flutter</li><li>FCM</li></ul>
+        <div class="links" data-for="savigold"></div>
+        <a class="go" href="#hop-tac">Làm app tương tự →</a>
+      </article>
+      <article class="panel" data-screen="flip" style="--c:var(--a4)" data-hue="#8B7CFF">
+        <div class="kind">Freelance · App + API</div><h3>DataDude</h3><span class="role">Full-stack</span>
+        <dl class="cs"><div><dt>Bài toán</dt><dd>App học tập có nhiều nội dung, phải mượt khi cuộn và có cảm giác tương tác.</dd></div><div><dt>Mình làm</dt><dd>Thẻ lật, thanh tiến độ, cử chỉ và lộ trình bằng Reanimated. Dữ liệu qua React Query: cuộn vô hạn, đồng bộ nền, cache. API NestJS cho xác thực, upload, xử lý media, push.</dd></div><div><dt>Khách nhận</dt><dd>App React Native cùng API, migration và seeder đã quản lý sẵn.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App nội dung hoặc học tập, tương tác nhiều, cần API đi kèm.</dd></div></dl>
+        <ul class="tags"><li>React Native</li><li>React Query</li><li>NestJS</li><li>Sequelize</li><li>JWT</li></ul>
+        <div class="links" data-for="datadude"></div>
+        <a class="go" href="#hop-tac">Làm app tương tự →</a>
+      </article>
+      <article class="panel" data-screen="map" style="--c:var(--a3)" data-hue="#36D7C0">
+        <div class="kind">Freelance · Mobile</div><h3>Mobiland</h3><span class="role">Mobile</span>
+        <dl class="cs"><div><dt>Bài toán</dt><dd>Vẽ vùng và xem nhiều điểm bất động sản trên bản đồ mà không giật, kể cả máy yếu.</dd></div><div><dt>Mình làm</dt><dd>State realtime bằng MobX. Mapbox GL: vẽ polygon, gom cụm, bản đồ offline, 3D extrusion, geocoding.</dd></div><div><dt>Khách nhận</dt><dd>Bộ tính năng bản đồ trọn gói, đã tối ưu cho máy cấu hình thấp.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App bản đồ: bất động sản, địa điểm, giao hàng, theo dõi vị trí.</dd></div></dl>
+        <ul class="tags"><li>React Native</li><li>MobX</li><li>Mapbox GL</li></ul>
+        <div class="links" data-for="mobiland"></div>
+        <a class="go" href="#hop-tac">Làm app tương tự →</a>
+      </article>
+      <article class="panel" data-screen="quiz" style="--c:var(--a3)" data-hue="#36D7C0">
+        <div class="kind">Dự án cá nhân · Web</div><h3>Nihongo Học Viên</h3><span class="role">WordPress</span>
+        <dl class="cs"><div><dt>Bài toán</dt><dd>Học viên cần ôn đề có giải thích bằng tiếng Việt và được chấm điểm ngay.</dd></div><div><dt>Mình làm</dt><dd>Tự viết plugin WordPress: quiz có giải thích, chấm điểm trên web, flashcard lật thẻ. Dựng bằng Docker và WP-CLI.</dd></div><div><dt>Khách nhận</dt><dd>Website, plugin và script cài đặt tự động, có bản sao lưu trước khi nâng cấp.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>Website WordPress nhỏ cần một tính năng riêng viết tay.</dd></div></dl>
+        <ul class="tags"><li>WordPress</li><li>PHP</li><li>Elementor</li><li>Docker</li><li>WP-CLI</li></ul>
+        <div class="links" data-for="nihongo"></div>
+        <a class="go" href="#hop-tac">Làm app tương tự →</a>
+      </article>
+
+      <div class="counter" aria-hidden="true"><span><b id="cnum">01</b> / 06</span><div class="trk"><i id="ctrk"></i></div></div>
+    </div>
+  </section>
+
+  <section class="s" id="dich-vu">
+    <div class="sec-head reveal"><div class="eyebrow">Dịch vụ &amp; báo giá</div><h2>Bạn cần gì, mình báo giá theo đó.</h2><p>Mỗi việc có phạm vi rõ ràng. Giá chốt theo hạng mục, kèm tiến độ và chi phí phát sinh nếu có.</p></div>
+    <div class="svc">
+      <div class="card reveal" style="--c:var(--a2)"><div class="kind">Landing page</div><h3>Trang giới thiệu &amp; bán hàng</h3>
+        <ul class="get"><li>Thiết kế theo brief của bạn, hiển thị tốt trên điện thoại</li><li>Form liên hệ, nút gọi hành động, thẻ tiêu đề và mô tả cơ bản</li><li>Tối ưu tốc độ tải, bàn giao kèm hướng dẫn sửa nội dung</li></ul>
+        <div class="price" data-k="landing">Báo giá theo yêu cầu</div><a class="go" href="#hop-tac">Nhận báo giá →</a></div>
+      <div class="card reveal" style="--c:var(--a3)"><div class="kind">WordPress</div><h3>Website nhiều trang</h3>
+        <ul class="get"><li>Cài đặt, chọn theme, dựng các trang theo cấu trúc bạn duyệt</li><li>Bạn tự đăng bài và sửa nội dung được, không cần biết code</li><li>Plugin riêng nếu cần tính năng đặc thù, bàn giao quyền quản trị và tài liệu</li></ul>
+        <div class="price" data-k="wordpress">Báo giá theo yêu cầu</div><a class="go" href="#hop-tac">Nhận báo giá →</a></div>
+      <div class="card reveal" style="--c:var(--a4)"><div class="kind">Web app</div><h3>Dashboard &amp; trang quản trị</h3>
+        <ul class="get"><li>ReactJS hoặc Next.js nối với API có sẵn hoặc API mình viết (NestJS, Laravel, Node.js)</li><li>Đăng nhập, phân quyền, bảng dữ liệu, form, biểu đồ</li><li>Bàn giao source và hướng dẫn triển khai</li></ul>
+        <div class="price" data-k="webapp">Báo giá theo yêu cầu</div><a class="go" href="#hop-tac">Nhận báo giá →</a></div>
+      <div class="card reveal" style="--c:var(--a1)"><div class="kind">Mobile</div><h3>App iOS &amp; Android</h3>
+        <ul class="get"><li>React Native, Flutter hoặc Kotlin tùy bài toán</li><li>Thông báo đẩy, bản đồ, thanh toán, realtime khi dự án cần</li><li>Build, đưa lên App Store và Google Play, hỗ trợ sau phát hành</li></ul>
+        <div class="price" data-k="mobile">Báo giá theo yêu cầu</div><a class="go" href="#hop-tac">Nhận báo giá →</a></div>
+    </div>
+    <div class="need reveal"><h3>Để báo giá nhanh và sát, mình cần từ bạn</h3>
+      <ul><li>Mục tiêu: bán hàng, giới thiệu công ty hay nhận khách đăng ký?</li><li>Số trang hoặc số chức năng chính, càng cụ thể càng tốt</li><li>1 đến 2 trang web bạn thích để mình tham khảo phong cách</li><li>Đã có logo, nội dung, tên miền và hosting chưa?</li><li>Mốc cần hoàn thành</li></ul>
+    </div>
+  </section>
+
+  <section class="s" id="web">
+    <div class="sec-head reveal"><div class="eyebrow">Web</div><h2>Cả web cũng làm trọn.</h2><p>Từ website giới thiệu đến trang quản trị, nối thẳng với API của app.</p></div>
+    <div class="webgrid">
+      <div class="card reveal" style="--c:var(--a4)"><div class="kind">Freelance · Admin panel</div><h3>Trang admin SaviGold</h3><p>Dashboard Next.js cho dữ liệu giá vàng, Sổ vàng và chat cộng đồng, dựng trên bộ giao diện Next.js và shadcn UI, nối với API NestJS.</p><ul class="tags"><li>Next.js</li><li>TypeScript</li><li>React Query</li></ul></div>
+      <div class="card reveal" style="--c:var(--a2)"><div class="kind">Dự án cá nhân · WordPress</div><h3>Nihongo Học Viên</h3><p>Website học tiếng Nhật có plugin quiz và flashcard tự viết, kèm script cài đặt tự động và bản sao lưu.</p><ul class="tags"><li>WordPress</li><li>PHP</li><li>Docker</li></ul></div>
+      <div class="card reveal" style="--c:var(--a1)"><div class="kind">Nhận làm</div><h3>Web cho dự án của bạn</h3><p>Website giới thiệu, landing page, trang đăng nhập và quản trị. Bạn mô tả việc cần làm, mình dựng và bàn giao kèm tài liệu.</p><ul class="tags"><li>WordPress</li><li>Next.js</li><li>ReactJS</li></ul><a class="go" href="#hop-tac">Gửi brief web →</a></div>
+    </div>
+  </section>
+
+  <section class="s" id="nang-luc">
+    <div class="sec-head reveal"><div class="eyebrow">Năng lực</div><h2>Mình làm được gì.</h2><p>Mỗi nhóm việc đều có sản phẩm thật phía sau, xem ở phần Dự án.</p></div>
+    <div class="skills">
+      <div class="skill reveal" style="--c:var(--a1)"><div class="ic">RN</div><h3>App React Native</h3><p>Expo, TypeScript, Redux hoặc MobX. Animation bằng Reanimated, tối ưu cho máy yếu.</p><ul class="tags"><li>Expo</li><li>Reanimated</li><li>React Query</li></ul></div>
+      <div class="skill reveal" style="--c:var(--a3)"><div class="ic">Fl</div><h3>Flutter &amp; Android</h3><p>Flutter với GetX và Firebase, đăng nhập Apple. Kotlin cho thiết bị chuyên dụng.</p><ul class="tags"><li>GetX</li><li>Jetpack</li><li>Coroutines</li></ul></div>
+      <div class="skill reveal" style="--c:var(--a4)"><div class="ic">API</div><h3>Backend &amp; admin</h3><p>NestJS có JWT, upload file, push notification, migration, Swagger. Admin bằng Next.js.</p><ul class="tags"><li>NestJS</li><li>PostgreSQL</li><li>Docker</li></ul></div>
+      <div class="skill reveal" style="--c:var(--a2)"><div class="ic">Map</div><h3>Bản đồ &amp; realtime</h3><p>Mapbox GL: polygon, gom cụm, bản đồ offline, 3D. Socket.IO và định vị thời gian thực.</p><ul class="tags"><li>Mapbox GL</li><li>Socket.IO</li></ul></div>
+      <div class="skill reveal" style="--c:var(--a1)"><div class="ic">POS</div><h3>Thanh toán &amp; POS</h3><p>SDK PAX, Sunmi, Clover, Valor. In nhiệt ESC/POS, quét mã vạch, đồng bộ offline.</p><ul class="tags"><li>ESC/POS</li><li>Room</li><li>CameraX</li></ul></div>
+      <div class="skill reveal" style="--c:var(--a3)"><div class="ic">CI</div><h3>Phát hành</h3><p>Build iOS và Android, cập nhật nóng bằng CodePush, CI/CD cho mỗi bản phát hành.</p><ul class="tags"><li>CodePush</li><li>GitHub Actions</li><li>Bitrise</li></ul></div>
+      <div class="skill reveal" style="--c:var(--a2)"><div class="ic">WP</div><h3>Website & WordPress</h3><p>Website giới thiệu, WordPress tùy biến, plugin tự viết, Elementor, dựng bằng Docker và WP-CLI.</p><ul class="tags"><li>WordPress</li><li>PHP</li><li>Elementor</li></ul></div>
+      <div class="skill reveal" style="--c:var(--a4)"><div class="ic">Web</div><h3>Web app & dashboard</h3><p>ReactJS và Next.js cho trang admin, dashboard, form và bảng dữ liệu, nối thẳng với API.</p><ul class="tags"><li>ReactJS</li><li>Next.js</li><li>TypeScript</li></ul></div>
+      <div class="skill reveal" style="--c:var(--a1)"><div class="ic">PHP</div><h3>Laravel & Node.js</h3><p>API và trang quản trị bằng PHP (Laravel) hoặc Node.js khi dự án cần.</p><ul class="tags"><li>Laravel</li><li>Node.js</li><li>REST</li></ul></div>
+    </div>
+  </section>
+
+
+
+
+  <section class="s" id="quy-trinh">
+    <div class="sec-head reveal"><div class="eyebrow">Quy trình</div><h2>Sáu bước, mỗi bước có thứ để duyệt.</h2></div>
+    <ol class="flow">
+      <li class="reveal"><strong>Brief</strong>Hỏi lại các điểm chưa rõ</li>
+      <li class="reveal"><strong>Báo giá</strong>Theo hạng mục và tiến độ</li>
+      <li class="reveal"><strong>Prototype</strong>Khách duyệt trước khi code</li>
+      <li class="reveal"><strong>Phát triển</strong>Giao theo mốc, báo cáo định kỳ</li>
+      <li class="reveal"><strong>Kiểm thử</strong>Build iOS/Android, sửa lỗi</li>
+      <li class="reveal"><strong>Bàn giao</strong>Source, tài liệu, hỗ trợ sau bàn giao</li>
+    </ol>
+  </section>
+
+  <section class="s">
+    <div class="sec-head reveal"><div class="eyebrow">Thêm về mình</div><h2>Học vấn và công cụ.</h2></div>
+    <div class="about">
+      <div class="card reveal"><h3>Học vấn</h3><ul><li>ĐH Công nghệ Thông tin, ĐHQG TP.HCM, ngành Hệ thống thông tin (2018–2022)</li><li>TOEIC 600 (2024)</li></ul></div>
+      <div class="card reveal"><h3>Công cụ hằng ngày</h3><ul><li>Agile/Scrum, Git, Postman, Reactotron, Flipper</li><li>Claude Code, Codex, Gemini, GitHub Copilot cho việc lặp lại</li><li>Đọc và nghe tiếng Anh tốt, giao tiếp trung cấp</li></ul></div>
+    </div>
+  </section>
+
+  <div class="cta-band reveal" id="hop-tac">
+    <div>
+      <h2>Có app cần làm?</h2>
+      <p>Gửi brief cho mình. Mình trả lời kèm bản báo giá theo hạng mục, và luôn hỏi trước ba điều này:</p>
+      <ul class="ask"><li>Bạn cần app (iOS, Android), website, hay cả hai?</li><li>Đã có API và thiết kế chưa, hay cần làm từ đầu?</li><li>Mốc ra mắt mong muốn và ngân sách dự kiến?</li></ul>
+    </div>
+    <div style="display:grid;gap:12px;justify-items:start"><a class="btn vl" id="vl" href="#" target="_blank" rel="noopener">Gửi brief trên vLance ↗</a><div class="contact-h">Liên hệ trực tiếp</div><div class="contact" id="contact"></div></div>
+  </div>
+  <div class="small">Với các app làm trong công ty, mình chỉ mô tả phần việc kỹ thuật của mình. Màn hình trên điện thoại 3D là minh họa tính năng, không phải ảnh chụp sản phẩm.</div>
+</div>
+
+<script>
+/* ===== LINKS: điền URL thật vào đây. Ô nào để trống sẽ tự ẩn. ===== */
+var PRICING={  // điền giá nếu muốn hiện, ví dụ 'Từ 3.000.000đ'. Để trống thì hiện 'Báo giá theo yêu cầu'
+  landing:'',wordpress:'',webapp:'',mobile:''
+};
+var LINKS={
+  vlance:'',                       // hồ sơ vLance của bạn
+  contact:{
+    zalo:'https://zalo.me/0349177010',   // số Zalo (lấy từ CV, đổi nếu Zalo dùng số khác)
+    email:'nhonpham13@gmail.com',
+    linkedin:'https://www.linkedin.com/in/v%C4%83n-nh%C6%A1n-20a2a01a2/',
+    github:'https://github.com/nhonvp'
+  },
+  babyquip:{ios:'https://apps.apple.com/us/app/id6444820633',android:'https://play.google.com/store/apps/details?id=com.babyquip.app',web:'https://www.babyquip.com'},
+  savigold:{ios:'',android:'https://play.google.com/store/apps/details?id=com.savigold.prod',web:'',code:''},
+  datadude:{ios:'https://apps.apple.com/vn/app/id6670720841',android:'https://play.google.com/store/apps/details?id=com.datadude',web:'',code:''},
+  mobiland:{ios:'https://apps.apple.com/vn/app/id6743050577',android:'https://play.google.com/store/apps/details?id=com.mobile_land',web:'https://map.mobileland.vn/?p=m',code:''},
+  pos:{ios:'https://apps.apple.com/us/app/-/id6744919818',android:'https://play.google.com/store/apps/details?id=com.richpaytech.pos.salon',checkin:'https://apps.apple.com/us/app/richcheckin/id6472717470'},
+  nihongo:{web:'',code:''}
+};
+(function(){
+  var EN={"Bỏ qua, xem dự án": "Skip to projects", "đang dựng giao diện…": "building the interface…", "Dự án": "Projects", "Năng lực": "Skills", "Quy trình": "Process", "Hợp tác": "Work together", "Phạm Văn Nhơn · Mobile & Full-stack · TP. Hồ Chí Minh": "Phạm Văn Nhơn · Mobile & Full-stack · Ho Chi Minh City", "App mobile": "Mobile apps", "đã lên store,": "live on the stores,", "làm trọn từ API.": "built end to end from the API.", "Gần 6 năm làm app React Native, Flutter và Android Kotlin, thêm 1 năm backend NestJS. Một người lo trọn API, trang admin và app iOS/Android.": "Nearly 6 years building apps in React Native, Flutter and Android Kotlin, plus 1 year of NestJS backend. One person covers the API, the admin panel and the iOS/Android app.", "Xem dự án ↓": "See projects ↓", "Cuộn để xem điện thoại chạy": "Scroll to see the phone run", "năm làm app mobile": "years building mobile apps", "dự án freelance làm trọn gói": "freelance projects delivered end to end", "nền tảng: RN · Flutter · Kotlin · NestJS": "stacks: RN · Flutter · Kotlin · NestJS", "người lo từ API đến store": "person from API to store", "Cuộn để xem từng app chạy.": "Scroll to watch each app run.", "Điện thoại 3D bên cạnh chạy một tính năng thật của từng dự án.": "The 3D phone beside it runs a real feature from each project.", "Trình duyệt này không hiển thị được cảnh 3D, nên các dự án được liệt kê dạng danh sách.": "This browser cannot show the 3D scene, so the projects are listed instead.", "Công ty · Hệ thống POS": "Company · POS system", "Dự án cá nhân · Web": "Personal project · Web", "Bài toán": "Problem", "Mình làm": "What I did", "Khách nhận": "Client gets", "Hợp nếu bạn cần": "Fits if you need", "Người dùng cần theo dõi giá vàng, biết lãi/lỗ danh mục và được báo khi giá chạm mức đã đặt.": "Users need to track gold prices, see portfolio profit/loss and get alerted when a price hits their target.", "Backend NestJS có bộ thu thập giá chạy theo lịch và gửi thông báo FCM. Sổ vàng, chat cộng đồng, trang admin và app Flutter (Dio tự làm mới token, đăng nhập Apple).": "NestJS backend with a scheduled price crawler and FCM notifications. A gold book, community chat, an admin panel and a Flutter app (Dio token refresh, Sign in with Apple).", "API, trang admin và app iOS/Android trọn gói từ một người.": "API, admin panel and iOS/Android app, all from one person.", "App có thông báo theo điều kiện, dữ liệu cập nhật theo lịch, kèm trang quản trị.": "Apps with condition-based notifications, scheduled data updates and an admin panel.", "Làm app tương tự →": "Build a similar app →", "App học tập có nhiều nội dung, phải mượt khi cuộn và có cảm giác tương tác.": "A learning app with lots of content that must scroll smoothly and feel interactive.", "Thẻ lật, thanh tiến độ, cử chỉ và lộ trình bằng Reanimated. Dữ liệu qua React Query: cuộn vô hạn, đồng bộ nền, cache. API NestJS cho xác thực, upload, xử lý media, push.": "Flip cards, progress bars, gestures and a roadmap with Reanimated. Data through React Query: infinite scroll, background sync, caching. NestJS API for auth, upload, media processing and push.", "App React Native cùng API, migration và seeder đã quản lý sẵn.": "A React Native app with its API, migrations and seeders already managed.", "App nội dung hoặc học tập, tương tác nhiều, cần API đi kèm.": "Content or learning apps with lots of interaction that need an API alongside.", "Vẽ vùng và xem nhiều điểm bất động sản trên bản đồ mà không giật, kể cả máy yếu.": "Draw areas and browse many real-estate points on a map without lag, even on weak devices.", "State realtime bằng MobX. Mapbox GL: vẽ polygon, gom cụm, bản đồ offline, 3D extrusion, geocoding.": "Real-time state with MobX. Mapbox GL: polygon drawing, clustering, offline maps, 3D extrusion, geocoding.", "Bộ tính năng bản đồ trọn gói, đã tối ưu cho máy cấu hình thấp.": "A complete map feature set, tuned for low-spec devices.", "App bản đồ: bất động sản, địa điểm, giao hàng, theo dõi vị trí.": "Map apps: real estate, places, delivery, location tracking.", "POS cho salon": "POS for salons", "Cửa hàng cần bán hàng, in hóa đơn và thanh toán ổn định, kể cả khi mất mạng.": "Stores need to sell, print receipts and take payments reliably, even when the network drops.", "React Native cho Android, iOS, Clover, cập nhật nóng bằng CodePush. Bản Kotlin cho PAX, Sunmi, Clover, Valor: máy in nhiệt ESC/POS, ngăn kéo tiền, quét mã, offline-first bằng Room.": "React Native for Android, iOS and Clover with CodePush hot updates. A Kotlin build for PAX, Sunmi, Clover and Valor: ESC/POS thermal printing, cash drawer, scanning, offline-first with Room.", "App chạy trên thiết bị POS thật, có unit test, E2E và pipeline build tự động.": "An app running on real POS hardware, with unit tests, E2E tests and an automated build pipeline.", "App bán hàng hoặc POS cần tích hợp máy in và máy thanh toán.": "Sales or POS apps that need printer and payment terminal integration.", "Học viên cần ôn đề có giải thích bằng tiếng Việt và được chấm điểm ngay.": "Learners need practice tests with explanations in Vietnamese and instant scoring.", "Tự viết plugin WordPress: quiz có giải thích, chấm điểm trên web, flashcard lật thẻ. Dựng bằng Docker và WP-CLI.": "A WordPress plugin I wrote myself: quizzes with explanations, on-page scoring, flip flashcards. Built with Docker and WP-CLI.", "Website, plugin và script cài đặt tự động, có bản sao lưu trước khi nâng cấp.": "A website, the plugin and an automated setup script, with a backup before upgrades.", "Website WordPress nhỏ cần một tính năng riêng viết tay.": "Small WordPress sites that need one custom-coded feature.", "Sáu việc mình làm lặp đi lặp lại.": "Six things I do again and again.", "Mỗi việc đều có một sản phẩm thật phía sau, ở phần Dự án.": "Each one has a real product behind it, in the Projects section.", "App React Native": "React Native apps", "Expo, TypeScript, Redux hoặc MobX. Animation bằng Reanimated, tối ưu cho máy yếu.": "Expo, TypeScript, Redux or MobX. Animation with Reanimated, tuned for low-end devices.", "Flutter với GetX và Firebase, đăng nhập Apple. Kotlin cho thiết bị chuyên dụng.": "Flutter with GetX and Firebase, Sign in with Apple. Kotlin for dedicated hardware.", "NestJS có JWT, upload file, push notification, migration, Swagger. Admin bằng Next.js.": "NestJS with JWT, file upload, push notifications, migrations and Swagger. Admin in Next.js.", "Bản đồ & realtime": "Maps & realtime", "Mapbox GL: polygon, gom cụm, bản đồ offline, 3D. Socket.IO và định vị thời gian thực.": "Mapbox GL: polygons, clustering, offline maps, 3D. Socket.IO and real-time location.", "Thanh toán & POS": "Payments & POS", "SDK PAX, Sunmi, Clover, Valor. In nhiệt ESC/POS, quét mã vạch, đồng bộ offline.": "PAX, Sunmi, Clover and Valor SDKs. ESC/POS thermal printing, barcode scanning, offline sync.", "Phát hành": "Releases", "Build iOS và Android, cập nhật nóng bằng CodePush, CI/CD cho mỗi bản phát hành.": "iOS and Android builds, hot updates with CodePush, CI/CD for every release.", "Sáu bước, mỗi bước có thứ để duyệt.": "Six steps, each with something to review.", "Hỏi lại các điểm chưa rõ": "Clarify anything unclear", "Báo giá": "Quote", "Theo hạng mục và tiến độ": "By scope item and timeline", "Khách duyệt trước khi code": "You approve before coding", "Phát triển": "Build", "Giao theo mốc, báo cáo định kỳ": "Delivered in milestones, regular reports", "Kiểm thử": "Test", "Build iOS/Android, sửa lỗi": "iOS/Android builds, bug fixes", "Bàn giao": "Handover", "Source, tài liệu, hỗ trợ sau bàn giao": "Source, docs, post-handover support", "Thêm về mình": "More about me", "Học vấn và công cụ.": "Education and tools.", "Học vấn": "Education", "ĐH Công nghệ Thông tin, ĐHQG TP.HCM, ngành Hệ thống thông tin (2018–2022)": "University of Information Technology, VNU-HCM, Information Systems (2018–2022)", "Công cụ hằng ngày": "Daily tools", "Claude Code, Codex, Gemini, GitHub Copilot cho việc lặp lại": "Claude Code, Codex, Gemini and GitHub Copilot for repetitive work", "Đọc và nghe tiếng Anh tốt, giao tiếp trung cấp": "Good English reading and listening, intermediate speaking", "Đằng sau trang này": "Behind this page", "Trang này được dựng thế nào.": "How this page is built.", "Mình cho xem luôn, vì đây cũng là cách mình làm việc: ít thứ thừa, mỗi thứ có lý do.": "I show it openly because it is how I work: nothing extra, every piece has a reason.", "Một file": "One file", "HTML, CSS và JavaScript thuần trong một trang, không framework.": "Plain HTML, CSS and JavaScript in one page, no framework.", "Điện thoại 3D thật: thân máy, màn hình vẽ bằng canvas, ánh sáng đổi màu theo từng dự án.": "A real 3D phone: the body, a canvas-drawn screen, and lighting that changes colour per project.", "Ghim cảnh dự án và điều phối chuyển động theo thanh cuộn. Nếu lỗi, trang đổi sang dạng danh sách.": "Pins the project scene and drives motion from scrolling. If it fails, the page falls back to a list.", "Dễ tiếp cận": "Accessible", "Có nút bỏ qua, tôn trọng chế độ giảm chuyển động. Thử bấm vào logo để xoay điện thoại.": "Has a skip link and respects reduced-motion settings. Try clicking the logo to spin the phone.", "Có app cần làm?": "Have an app to build?", "Gửi brief qua vLance. Mình trả lời kèm bản báo giá theo hạng mục, và luôn hỏi trước ba điều này:": "Send your brief via vLance. I reply with a quote by scope item, and always ask these three things first:", "Ứng dụng chạy trên iOS, Android hay cả hai?": "Should the app run on iOS, Android or both?", "Đã có API và thiết kế chưa, hay cần làm từ đầu?": "Do you already have an API and a design, or does it start from scratch?", "Mốc ra mắt mong muốn và ngân sách dự kiến?": "What launch date and budget do you have in mind?", "Xem code trên GitHub ↗": "See code on GitHub ↗", "Các dự án làm trong công ty chỉ được mô tả về kỹ thuật, không nêu tên khách hàng. Màn hình trên điện thoại 3D là minh họa tính năng, không phải ảnh chụp sản phẩm.": "Work done inside a company is described technically only, with no client names. The screens on the 3D phone illustrate features and are not screenshots of the products.", "Gửi brief trên vLance ↗": "Send a brief on vLance ↗"}, ENC={"Sổ vàng": "Gold book", "minh họa giao diện": "UI illustration", "Cảnh báo giá": "Price alert", "Vàng chạm mức bạn đặt": "Gold hit your target", "Danh mục của tôi": "My portfolio", "▲ lãi / lỗ tự tính": "▲ profit / loss, auto", "Ôn tập": "Review", "Thẻ": "Flash", "ghi nhớ": "card", "Mặt sau": "Back", "có đáp án": "with answer", "Tiến độ cập nhật mượt": "Smooth progress updates", "Bản đồ": "Map", "Vẽ vùng · gom cụm · offline": "Draw areas · clusters · offline", "Thanh toán": "Payment", "HÓA ĐƠN": "RECEIPT", "Dịch vụ A": "Service A", "Dịch vụ B": "Service B", "Sản phẩm": "Product", "TỔNG": "TOTAL", "ĐÃ THANH TOÁN": "PAID", "Luyện đề N5": "JLPT N5 practice", "Giải thích: 何 (なん) hỏi về đồ vật.": "Why: 何 (なん) asks about things."};
+  var LABEL={checkin:'RICH Check-in (App Store)',ios:'App Store',android:'Google Play',web:{vi:'Xem demo',en:'Live demo'},code:{vi:'Mã nguồn',en:'Source code'}};
+  EN['Liên hệ trực tiếp']='Contact directly';
+  Object.assign(EN,{"Dự án nổi bật.": "Featured projects.", "Các app và website mình đã tham gia làm. Màn hình điện thoại minh họa một tính năng thật của từng dự án.": "Apps and websites I have worked on. The phone screen illustrates a real feature of each project.", "Gửi brief cho mình. Mình trả lời kèm bản báo giá theo hạng mục, và luôn hỏi trước ba điều này:": "Send me your brief. I reply with a quote by scope item, and always ask these three things first:", "Mình làm được gì.": "What I can do.", "Mỗi nhóm việc đều có sản phẩm thật phía sau, xem ở phần Dự án.": "Every group of work has a real product behind it, shown in Projects."});
+  Object.assign(EN,{"Dịch vụ": "Services", "Dịch vụ & báo giá": "Services & quotes", "Bạn cần gì, mình báo giá theo đó.": "Tell me what you need, I quote to match.", "Mỗi việc có phạm vi rõ ràng. Giá chốt theo hạng mục, kèm tiến độ và chi phí phát sinh nếu có.": "Every job has a clear scope. Prices are fixed per item, with the timeline and any extra costs stated.", "Landing page": "Landing page", "Trang giới thiệu & bán hàng": "Marketing & sales page", "Thiết kế theo brief của bạn, hiển thị tốt trên điện thoại": "Designed from your brief and looks right on phones", "Form liên hệ, nút gọi hành động, thẻ tiêu đề và mô tả cơ bản": "Contact form, call-to-action buttons, basic title and description tags", "Tối ưu tốc độ tải, bàn giao kèm hướng dẫn sửa nội dung": "Tuned for load speed, handed over with a guide to editing content", "Báo giá theo yêu cầu": "Quote on request", "Nhận báo giá →": "Get a quote →", "WordPress": "WordPress", "Website nhiều trang": "Multi-page website", "Cài đặt, chọn theme, dựng các trang theo cấu trúc bạn duyệt": "Setup, theme choice and pages built to a structure you approve", "Bạn tự đăng bài và sửa nội dung được, không cần biết code": "You can post and edit content yourself, no code needed", "Plugin riêng nếu cần tính năng đặc thù, bàn giao quyền quản trị và tài liệu": "A custom plugin if you need a special feature, with admin access and documentation handed over", "Web app": "Web app", "Dashboard & trang quản trị": "Dashboards & admin panels", "ReactJS hoặc Next.js nối với API có sẵn hoặc API mình viết (NestJS, Laravel, Node.js)": "ReactJS or Next.js connected to your existing API or one I write (NestJS, Laravel, Node.js)", "Đăng nhập, phân quyền, bảng dữ liệu, form, biểu đồ": "Login, roles, data tables, forms, charts", "Bàn giao source và hướng dẫn triển khai": "Source code and deployment guide handed over", "Mobile": "Mobile", "App iOS & Android": "iOS & Android apps", "React Native, Flutter hoặc Kotlin tùy bài toán": "React Native, Flutter or Kotlin depending on the problem", "Thông báo đẩy, bản đồ, thanh toán, realtime khi dự án cần": "Push notifications, maps, payments and realtime when the project needs them", "Build, đưa lên App Store và Google Play, hỗ trợ sau phát hành": "Builds, publishing to the App Store and Google Play, post-release support", "Để báo giá nhanh và sát, mình cần từ bạn": "To quote quickly and accurately, I need from you", "Mục tiêu: bán hàng, giới thiệu công ty hay nhận khách đăng ký?": "Goal: sell, introduce the company or collect sign-ups?", "Số trang hoặc số chức năng chính, càng cụ thể càng tốt": "Number of pages or main features, as specific as possible", "1 đến 2 trang web bạn thích để mình tham khảo phong cách": "One or two sites you like, so I can see your taste", "Đã có logo, nội dung, tên miền và hosting chưa?": "Do you already have a logo, content, domain and hosting?", "Mốc cần hoàn thành": "Deadline you need"});
+  Object.assign(EN,{"Phạm Văn Nhơn · Mobile · Web · Full-stack · TP. Hồ Chí Minh": "Phạm Văn Nhơn · Mobile · Web · Full-stack · Ho Chi Minh City", "Web & app": "Web & apps", "đã chạy thật,": "already live,", "Gần 6 năm làm app mobile (React Native, Flutter, Kotlin) và 1 năm full-stack với NestJS, Next.js, React, WordPress. Một người lo trọn API, trang web, trang admin và app.": "Nearly 6 years building mobile apps (React Native, Flutter, Kotlin) and 1 year of full-stack with NestJS, Next.js, React and WordPress. One person covers the API, the website, the admin panel and the app.", "mảng việc: mobile · web · backend · POS": "areas: mobile · web · backend · POS", "người lo từ API đến store và trang web": "person from API to store and website", "Chín việc mình làm lặp đi lặp lại.": "Nine things I do again and again.", "Website & WordPress": "Websites & WordPress", "Website giới thiệu, WordPress tùy biến, plugin tự viết, Elementor, dựng bằng Docker và WP-CLI.": "Company websites, custom WordPress, self-written plugins, Elementor, built with Docker and WP-CLI.", "Web app & dashboard": "Web apps & dashboards", "ReactJS và Next.js cho trang admin, dashboard, form và bảng dữ liệu, nối thẳng với API.": "ReactJS and Next.js for admin panels, dashboards, forms and data tables, wired straight to the API.", "Laravel & Node.js": "Laravel & Node.js", "API và trang quản trị bằng PHP (Laravel) hoặc Node.js khi dự án cần.": "APIs and admin panels in PHP (Laravel) or Node.js when a project needs them.", "Web": "Web", "Cả web cũng làm trọn.": "Web, end to end too.", "Từ website giới thiệu đến trang quản trị, nối thẳng với API của app.": "From company websites to admin panels, wired straight to the app API.", "Freelance · Admin panel": "Freelance · Admin panel", "Trang admin SaviGold": "SaviGold admin panel", "Dashboard Next.js cho dữ liệu giá vàng, Sổ vàng và chat cộng đồng, dựng trên bộ giao diện Next.js và shadcn UI, nối với API NestJS.": "A Next.js dashboard for gold price data, the Gold Book and community chat, built on a Next.js and shadcn UI kit, wired to the NestJS API.", "Dự án cá nhân · WordPress": "Personal project · WordPress", "Website học tiếng Nhật có plugin quiz và flashcard tự viết, kèm script cài đặt tự động và bản sao lưu.": "A Japanese-learning website with a self-written quiz and flashcard plugin, plus an automated setup script and backups.", "Nhận làm": "Available for", "Web cho dự án của bạn": "Web for your project", "Website giới thiệu, landing page, trang đăng nhập và quản trị. Bạn mô tả việc cần làm, mình dựng và bàn giao kèm tài liệu.": "Company websites, landing pages, login and admin pages. You describe the job, I build it and hand it over with documentation.", "Gửi brief web →": "Send a web brief →", "Bạn cần app (iOS, Android), website, hay cả hai?": "Do you need an app (iOS, Android), a website, or both?"});ENC=Object.assign(ENC,{"Thuê đồ cho bé": "Baby gear", "Ngày nhận → ngày trả": "Pickup → return", "Xe đẩy em bé": "Stroller", "Cũi / nôi": "Crib", "Ghế ăn dặm": "High chair", "Đặt thuê": "Reserve", "Đã xác nhận ✓": "Confirmed ✓"});
+  Object.assign(EN,{"Công ty · Đặt thuê đồ cho trẻ": "Company · Baby gear rental", "Gia đình cần thuê đồ cho trẻ khi đi du lịch, đặt lịch và nhắn với nhà cung cấp ngay trong app.": "Families need to rent gear for kids while travelling, book dates and message the provider right in the app.", "Tham gia từ đầu đến khi phát hành trong team 14 người: phát triển luồng đặt thuê, tích hợp Stripe và Google Maps SDK, thông báo đẩy, Socket.io, theo dõi lỗi bằng Sentry, viết unit test và tối ưu hiệu năng.": "Joined from the start through release in a team of 14: built the rental booking flow, integrated Stripe and the Google Maps SDK, push notifications, Socket.io, Sentry error tracking, unit tests and performance tuning.", "App React Native chạy trên iOS và Android, đã có trên App Store và Google Play.": "A React Native app on iOS and Android, live on the App Store and Google Play.", "App đặt lịch hoặc marketplace có thanh toán Stripe và bản đồ.": "Booking apps or marketplaces with Stripe payments and maps."});
+  var lang='vi',orig=new WeakMap();
+  var norm=function(t){return t.replace(/\s+/g,' ').trim()};
+  function swap(l){
+    var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode&&n.parentNode.nodeName;return(p==='SCRIPT'||p==='STYLE')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}}),n;
+    while((n=w.nextNode())){
+      var rec=orig.get(n);if(!rec){var k=norm(n.nodeValue);if(!k||!(k in EN))continue;rec={full:n.nodeValue,key:k};orig.set(n,rec)}
+      if(l==='en'){var m=/^(\s*)[\s\S]*?(\s*)$/.exec(rec.full);n.nodeValue=m[1]+EN[rec.key]+m[2]}else n.nodeValue=rec.full;
+    }
+    var b=document.getElementById('brand');if(b){b.title=l==='en'?'Click to spin the phone':'Bấm để xoay điện thoại';b.setAttribute('aria-label',b.title)}
+  }
+  function links(){
+    document.querySelectorAll('.links').forEach(function(box){
+      var cfg=LINKS[box.dataset['for']]||{};box.textContent='';
+      ['ios','android','checkin','web','code'].forEach(function(k){
+        if(!cfg[k])return;var a=document.createElement('a');a.href=cfg[k];a.target='_blank';a.rel='noopener';
+        var lb=LABEL[k];a.textContent=(typeof lb==='string'?lb:lb[lang])+' ↗';a.dataset.k=k;box.appendChild(a)});
+    });
+    var dk=document.getElementById('dock');
+    if(dk){dk.textContent='';var C2=LINKS.contact||{};
+      var ICON={
+        zalo:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="3.5" width="21" height="15.5" rx="5" fill="currentColor"/><path d="M6 22.5l3.2-4h-3z" fill="currentColor"/><text x="12" y="15" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="8.6" fill="#0068FF">Zalo</text></svg>',
+        linkedin:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>',
+        github:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>'};
+      var BRAND={zalo:'#0068FF',linkedin:'#0A66C2',github:'#6e5494'};
+      [['zalo','Zalo'],['linkedin','LinkedIn'],['github','GitHub']].forEach(function(it){
+        var u=C2[it[0]];if(!u)return;var a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';
+        a.setAttribute('aria-label',it[1]);a.dataset.tip=it[1];a.style.setProperty('--bc',BRAND[it[0]]);a.innerHTML=ICON[it[0]];dk.appendChild(a)});
+    }
+    var ct=document.getElementById('contact');
+    if(ct){ct.textContent='';var C=LINKS.contact||{};
+      function pill(label,href){var a=document.createElement('a');a.href=href;a.target='_blank';a.rel='noopener';a.textContent=label;ct.appendChild(a)}
+      if(C.zalo)pill('Zalo ↗',C.zalo);
+      if(C.email){var b=document.createElement('button');b.type='button';var base=C.email;b.textContent=base+' ⧉';
+        b.title=lang==='en'?'Click to copy':'Bấm để chép';
+        b.addEventListener('click',function(){
+          function done(){b.textContent=lang==='en'?'Copied ✓':'Đã chép ✓';setTimeout(function(){b.textContent=base+' ⧉'},1600)}
+          try{navigator.clipboard.writeText(base).then(done,function(){sel()})}catch(e){sel()}
+          function sel(){var r=document.createRange();r.selectNodeContents(b);var g=getSelection();g.removeAllRanges();g.addRange(r);b.textContent=base}
+        });ct.appendChild(b)}
+      if(C.linkedin)pill('LinkedIn ↗',C.linkedin);
+      if(C.github)pill('GitHub ↗',C.github);
+    }
+    document.querySelectorAll('.price').forEach(function(el){var v=PRICING[el.dataset.k];if(v)el.textContent=v;else if(!el.dataset.vi){}});
+    var vl=document.getElementById('vl');if(vl&&LINKS.vlance){vl.href=LINKS.vlance;vl.classList.add('on')}
+  }
+  function set(l){
+    lang=l;document.documentElement.lang=l;swap(l);links();
+    document.querySelectorAll('.lang button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.l===l?'true':'false')});
+    try{localStorage.setItem('lang',l)}catch(e){}
+  }
+  window.I18N={L:function(s){return lang==='en'&&ENC[s]?ENC[s]:s},set:set,get:function(){return lang}};
+  document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.l)})});
+  var saved='vi';try{saved=localStorage.getItem('lang')||'vi'}catch(e){}
+  links();if(saved==='en')set('en');
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var haveGsap=!!(window.gsap&&window.ScrollTrigger);
+  var S={cur:0,next:0,mix:0,spin:0,exit:0,enter:reduce?1:0,mx:0,my:0,idx:0};
+  var G={ok:false};
+
+  /* ================= 3D PHONE ================= */
+  var cv=document.getElementById('gl');
+  function init3D(){
+    if(!window.THREE||!cv||reduce)return;
+    try{
+      var R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
+      R.setPixelRatio(Math.min(devicePixelRatio||1,1.75));R.outputEncoding=THREE.sRGBEncoding;
+      var scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(40,1,.1,100);cam.position.z=8;
+
+      /* screen canvas: drawn every frame */
+      var W=460,HH=1000,sc=document.createElement('canvas');sc.width=W;sc.height=HH;var c=sc.getContext('2d');
+      var F=function(w,s){return w+' '+s+'px "Be Vietnam Pro","Hiragino Sans","Noto Sans JP",system-ui,sans-serif'};
+      var Mo=function(s){return '500 '+s+'px "JetBrains Mono",ui-monospace,monospace'};
+      var L=function(t){return window.I18N?window.I18N.L(t):t};
+      var cl=function(v){return Math.max(0,Math.min(1,v))};
+      var ease=function(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
+      function rr(x,y,w,h,r,k){k=k||c;k.beginPath();k.moveTo(x+r,y);k.arcTo(x+w,y,x+w,y+h,r);k.arcTo(x+w,y+h,x,y+h,r);k.arcTo(x,y+h,x,y,r);k.arcTo(x,y,x+w,y,r);k.closePath()}
+      function base(title,sub,acc){
+        var g=c.createLinearGradient(0,0,0,HH);g.addColorStop(0,'#10173A');g.addColorStop(1,'#080C1F');c.fillStyle=g;c.fillRect(0,0,W,HH);
+        c.textAlign='left';c.fillStyle='#9AA3C7';c.font=Mo(18);c.fillText('9:41',34,58);
+        c.fillStyle='#EDF0FF';c.font=F(800,42);c.fillText(L(title),30,132);
+        c.fillStyle='#9AA3C7';c.font=Mo(17);c.fillText(L(sub),30,164);
+        rr(30,HH-120,W-60,76,26);c.fillStyle='#141B3D';c.fill();c.strokeStyle='#262E55';c.lineWidth=2;c.stroke();
+        for(var i=0;i<4;i++){c.beginPath();c.arc(30+(W-60)*(i*.25+.125),HH-82,i===0?9:7,0,7);c.fillStyle=i===0?acc:'#2A3366';c.fill()}
+      }
+      function gold(t){
+        base('Sổ vàng','minh họa giao diện','#FFC857');var u=(t%6)/6;
+        rr(30,200,400,340,24);c.fillStyle='#141B3D';c.fill();
+        var pts=[.15,.28,.2,.42,.36,.5,.46,.64,.58,.72,.8,.92],n=pts.length-1,p=ease(cl(u/.5));
+        function val(q){var f=q*n,i=Math.min(n-1,Math.floor(f)),k=f-i;return pts[i]+(pts[i+1]-pts[i])*k}
+        c.strokeStyle='rgba(255,255,255,.06)';c.lineWidth=2;for(var g=0;g<4;g++){c.beginPath();c.moveTo(50,260+g*70);c.lineTo(410,260+g*70);c.stroke()}
+        c.beginPath();var S2=100,lx=50,ly=500;
+        for(var s=0;s<=S2*p;s++){var q=s/S2;lx=50+q*360;ly=510-val(q)*280;s?c.lineTo(lx,ly):c.moveTo(lx,ly)}
+        c.strokeStyle='#FFC857';c.lineWidth=6;c.lineCap='round';c.lineJoin='round';c.stroke();
+        c.lineTo(lx,520);c.lineTo(50,520);c.closePath();c.fillStyle='rgba(255,200,87,.14)';c.fill();
+        c.beginPath();c.arc(lx,ly,10,0,7);c.fillStyle='#FFC857';c.fill();
+        var k=cl((u-.6)/.1);
+        if(k>0){var y=570+(1-ease(k))*34;c.globalAlpha=k;rr(30,y,400,100,24);c.fillStyle='#1B2350';c.fill();
+          c.beginPath();c.arc(82,y+50,26,0,7);c.fillStyle='#FFC857';c.fill();c.fillStyle='#2b1d00';c.font=F(800,26);c.textAlign='center';c.fillText('!',82,y+59);
+          c.textAlign='left';c.fillStyle='#EDF0FF';c.font=F(600,24);c.fillText(L('Cảnh báo giá'),126,y+44);c.fillStyle='#9AA3C7';c.font=F(400,19);c.fillText(L('Vàng chạm mức bạn đặt'),126,y+74);c.globalAlpha=1}
+        rr(30,700,400,130,24);c.fillStyle='#141B3D';c.fill();
+        c.fillStyle='#9AA3C7';c.font=Mo(17);c.fillText(L('Danh mục của tôi'),54,742);c.fillStyle='#36D7C0';c.font=F(800,30);c.fillText(L('▲ lãi / lỗ tự tính'),54,792);
+      }
+      function flip(t){
+        base('Ôn tập','minh họa giao diện','#8B7CFF');var u=(t%6)/6,a=0;
+        if(u<.3)a=0;else if(u<.5)a=Math.PI*ease((u-.3)/.2);else if(u<.8)a=Math.PI;else a=Math.PI+Math.PI*ease((u-.8)/.2);
+        var cs=Math.cos(a),front=cs>0;
+        c.save();c.translate(230,420);c.scale(Math.max(Math.abs(cs),.02),1);
+        rr(-200,-210,400,420,28);
+        if(front){var g=c.createLinearGradient(-200,-210,200,210);g.addColorStop(0,'#8B7CFF');g.addColorStop(1,'#4B3FD0');c.fillStyle=g;c.fill();c.fillStyle='#fff';c.font=F(800,48);c.textAlign='center';c.fillText(L('Thẻ'),0,-6);c.fillText(L('ghi nhớ'),0,56)}
+        else{c.fillStyle='#182044';c.fill();c.strokeStyle='#252D55';c.lineWidth=3;c.stroke();c.fillStyle='#EDF0FF';c.font=F(800,38);c.textAlign='center';c.fillText(L('Mặt sau'),0,-6);c.fillText(L('có đáp án'),0,46)}
+        c.restore();c.textAlign='left';
+        rr(30,690,400,16,8);c.fillStyle='#182044';c.fill();
+        var w=400*(.15+.85*u);rr(30,690,w,16,8);var gg=c.createLinearGradient(30,0,430,0);gg.addColorStop(0,'#8B7CFF');gg.addColorStop(1,'#36D7C0');c.fillStyle=gg;c.fill();
+        c.fillStyle='#9AA3C7';c.font=Mo(17);c.fillText(L('Tiến độ cập nhật mượt'),30,744);
+      }
+      function map(t){
+        base('Bản đồ','minh họa giao diện','#36D7C0');var u=(t%6)/6;
+        c.save();rr(30,190,400,560,26);c.clip();c.fillStyle='#10162E';c.fillRect(30,190,400,560);
+        c.strokeStyle='#1E2750';c.lineWidth=2;for(var i=0;i<=10;i++){c.beginPath();c.moveTo(30+i*40,190);c.lineTo(30+i*40,750);c.stroke();c.beginPath();c.moveTo(30,190+i*40);c.lineTo(430,190+i*40);c.stroke()}
+        var P=[[110,330],[340,285],[385,490],[260,620],[135,545]],q=ease(cl(u/.5))*P.length;
+        c.strokeStyle='#36D7C0';c.lineWidth=5;c.lineJoin='round';c.beginPath();c.moveTo(P[0][0],P[0][1]);
+        for(var j=1;j<=P.length;j++){var A=P[j-1],B=P[j%P.length],k=cl(q-(j-1));if(k<=0)break;c.lineTo(A[0]+(B[0]-A[0])*k,A[1]+(B[1]-A[1])*k)}
+        c.stroke();
+        if(q>=P.length-.01){c.beginPath();P.forEach(function(p,i){i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1])});c.closePath();c.fillStyle='rgba(54,215,192,.22)';c.fill()}
+        P.forEach(function(p,i){if(i<q+.5){c.beginPath();c.arc(p[0],p[1],11,0,7);c.fillStyle='#070B18';c.fill();c.lineWidth=4;c.strokeStyle='#36D7C0';c.stroke()}});
+        [[225,430,26],[290,380,17],[170,500,14]].forEach(function(o,i){var pr=1+.2*Math.sin(t*3+i*1.6);c.beginPath();c.arc(o[0],o[1],o[2]*pr,0,7);c.fillStyle='rgba(255,107,139,.9)';c.fill();
+          if(i===0){c.fillStyle='#1C0710';c.font=F(800,22);c.textAlign='center';c.fillText('12',o[0],o[1]+8);c.textAlign='left'}});
+        c.restore();c.fillStyle='#9AA3C7';c.font=Mo(17);c.fillText(L('Vẽ vùng · gom cụm · offline'),30,790);
+      }
+      function pos(t){
+        base('Thanh toán','minh họa giao diện','#FF6B8B');var u=(t%7)/7;
+        rr(30,190,400,56,16);c.fillStyle='#182044';c.fill();c.fillStyle='#0A0F26';rr(60,232,340,8,4);c.fill();
+        c.save();c.beginPath();c.rect(30,232,400,540);c.clip();
+        var h=520*ease(cl(u/.4)),top=236;
+        c.fillStyle='#FFFFFF';rr(64,top-20,332,h+20,10);c.fill();
+        c.fillStyle='#16182B';c.font=Mo(19);var LN=[['HÓA ĐƠN','#0001'],['',''],['Dịch vụ A','25.00'],['Dịch vụ B','40.00'],['Sản phẩm','12.50'],['',''],['TỔNG','77.50']];
+        LN.forEach(function(r,i){var y=top+30+i*44;if(y>top+h-6)return;if(!r[0]){c.setLineDash([6,6]);c.strokeStyle='#9AA0C0';c.lineWidth=2;c.beginPath();c.moveTo(86,y-8);c.lineTo(374,y-8);c.stroke();c.setLineDash([]);return}
+          c.textAlign='left';c.fillText(L(r[0]),86,y);c.textAlign='right';c.fillText(r[1],374,y)});
+        var k=cl((u-.55)/.12);if(k>0){c.save();c.translate(230,top+368);c.rotate(-.14);var s=1+(1-ease(k))*1.2;c.scale(s,s);c.globalAlpha=k;
+          c.strokeStyle='#14B88A';c.lineWidth=5;rr(-120,-30,240,60,10);c.stroke();c.fillStyle='#14B88A';c.font=F(800,26);c.textAlign='center';c.fillText(L('ĐÃ THANH TOÁN'),0,9);c.restore()}
+        c.restore();c.textAlign='left';
+      }
+      function quiz(t){
+        base('Luyện đề N5','minh họa giao diện','#36D7C0');var u=(t%6)/6;
+        rr(30,200,400,130,24);c.fillStyle='#141B3D';c.fill();c.fillStyle='#EDF0FF';c.font=F(600,30);c.textAlign='center';c.fillText('「これは ( ) ですか。」',230,276);c.textAlign='left';
+        var O=['だれ','なん','どこ'],hit=cl((u-.4)/.1);
+        O.forEach(function(o,i){var y=370+i*102;rr(30,y,400,82,22);
+          if(i===1&&hit>0){c.fillStyle='rgba(54,215,192,'+(.08+.14*hit)+')';c.fill();c.strokeStyle='#36D7C0'}else{c.fillStyle='#141B3D';c.fill();c.strokeStyle='#252D55'}
+          c.lineWidth=3;c.stroke();c.fillStyle='#EDF0FF';c.font=F(600,32);c.fillText(o,58,y+53);
+          if(i===1&&hit>0){c.globalAlpha=hit;c.strokeStyle='#36D7C0';c.lineWidth=6;c.lineCap='round';c.beginPath();c.moveTo(372,y+42);c.lineTo(386,y+56);c.lineTo(408,y+28);c.stroke();c.globalAlpha=1}});
+        var e=cl((u-.55)/.1);if(e>0){c.globalAlpha=e;c.fillStyle='#9AA3C7';c.font=F(400,22);c.fillText(L('Giải thích: 何 (なん) hỏi về đồ vật.'),30,720+(1-e)*14);c.globalAlpha=1}
+      }
+      function quip(t){
+        base('Thuê đồ cho bé','minh họa giao diện','#8B7CFF');var u=(t%7)/7;
+        rr(30,196,400,64,20);c.fillStyle='#141B3D';c.fill();c.fillStyle='#9AA3C7';c.font=Mo(17);c.fillText(L('Ngày nhận → ngày trả'),52,236);
+        var items=['Xe đẩy em bé','Cũi / nôi','Ghế ăn dặm'];
+        items.forEach(function(it,i){var y=290+i*112,k=cl((u-.12-i*.14)/.1);
+          rr(30,y,400,96,24);c.fillStyle='#141B3D';c.fill();c.strokeStyle=k>0?'#8B7CFF':'#252D55';c.lineWidth=3;c.stroke();
+          rr(52,y+28,40,40,12);c.fillStyle=k>0?'#8B7CFF':'#182044';c.fill();
+          if(k>0){c.globalAlpha=k;c.strokeStyle='#fff';c.lineWidth=6;c.lineCap='round';c.lineJoin='round';c.beginPath();c.moveTo(61,y+49);c.lineTo(70,y+58);c.lineTo(84,y+39);c.stroke();c.globalAlpha=1}
+          c.fillStyle='#EDF0FF';c.font=F(600,28);c.fillText(L(it),114,y+58)});
+        var ok=cl((u-.66)/.08),by=680;rr(30,by,400,84,26);
+        if(ok>0){c.fillStyle='rgb('+Math.round(139-85*ok)+','+Math.round(124+91*ok)+','+Math.round(255-63*ok)+')'}else c.fillStyle='#8B7CFF';
+        c.fill();c.fillStyle=ok>.5?'#05241F':'#fff';c.font=F(800,30);c.textAlign='center';c.fillText(L(ok>.5?'Đã xác nhận ✓':'Đặt thuê'),230,by+54);c.textAlign='left';
+      }
+      var FN={gold:gold,flip:flip,map:map,pos:pos,quiz:quiz,quip:quip};
+      var D=[].slice.call(document.querySelectorAll('.panel')).map(function(p){return FN[p.dataset.screen]});
+      function paint(t){D[S.cur](t);if(S.mix>0){c.globalAlpha=S.mix;D[S.next](t);c.globalAlpha=1}}
+
+      /* textures + phone */
+      var tex=new THREE.CanvasTexture(sc);tex.encoding=THREE.sRGBEncoding;tex.anisotropy=4;
+      function rshape(w,h,r){var s=new THREE.Shape(),x=-w/2,y=-h/2;s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);return s}
+      var phone=new THREE.Group();
+      var body=new THREE.Mesh(new THREE.ExtrudeGeometry(rshape(1.5,3.1,.28),{depth:.14,bevelEnabled:true,bevelThickness:.045,bevelSize:.045,bevelSegments:6,curveSegments:24}),
+        new THREE.MeshStandardMaterial({color:0x242E5E,metalness:.85,roughness:.28}));
+      body.geometry.translate(0,0,-.07);phone.add(body);
+      var sg=new THREE.ShapeGeometry(rshape(1.36,2.96,.2),20),pa=sg.attributes.position,uv=new Float32Array(pa.count*2);
+      for(var i=0;i<pa.count;i++){uv[i*2]=(pa.getX(i)+.68)/1.36;uv[i*2+1]=(pa.getY(i)+1.48)/2.96}
+      sg.setAttribute('uv',new THREE.BufferAttribute(uv,2));
+      var screen=new THREE.Mesh(sg,new THREE.MeshBasicMaterial({map:tex}));screen.position.z=.117;phone.add(screen);
+      var notch=new THREE.Mesh(new THREE.ShapeGeometry(rshape(.46,.1,.05),12),new THREE.MeshBasicMaterial({color:0x05070f}));notch.position.set(0,1.32,.119);phone.add(notch);
+      scene.add(phone);
+
+      /* lights */
+      scene.add(new THREE.AmbientLight(0xffffff,.55));
+      var key=new THREE.PointLight(0xFFC857,1.6,30);key.position.set(3,2.5,5);scene.add(key);
+      var rim=new THREE.PointLight(0x8B7CFF,1.2,30);rim.position.set(-4,-2,-1);scene.add(rim);
+
+      /* orbiting tech chips */
+      var COL={a1:'#FF6B8B',a2:'#FFC857',a3:'#36D7C0',a4:'#8B7CFF'};
+      function mkChip(){var k=document.createElement('canvas');k.width=360;k.height=84;
+        var t=new THREE.CanvasTexture(k);t.encoding=THREE.sRGBEncoding;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true}));
+        sp.userData={k:k,t:t};sp.scale.set(1.05,.245,1);return sp}
+      function drawChip(sp,text,col){var k=sp.userData.k,x=k.getContext('2d');x.clearRect(0,0,k.width,k.height);
+        rr(2,2,k.width-4,80,40,x);x.fillStyle='rgba(16,22,46,.95)';x.fill();x.strokeStyle='#252D55';x.lineWidth=3;x.stroke();
+        x.beginPath();x.arc(40,42,10,0,7);x.fillStyle=col;x.fill();x.fillStyle='#EDF0FF';x.font='500 30px "JetBrains Mono",monospace';x.textBaseline='middle';x.fillText(text,64,44);sp.userData.t.needsUpdate=true}
+      var chips=[mkChip(),mkChip(),mkChip(),mkChip(),mkChip()],orbit=new THREE.Group(),nChips=0;
+      chips.forEach(function(s){orbit.add(s)});scene.add(orbit);
+      function setChips(list){nChips=list.length;chips.forEach(function(s,i){if(i<nChips){drawChip(s,list[i][0],list[i][1]);s.visible=true}else s.visible=false})}
+      setChips([['React Native',COL.a1],['Next.js',COL.a3],['WordPress',COL.a2],['NestJS',COL.a4],['Flutter',COL.a3]]);
+
+      /* particles */
+      var N=700,pp=new Float32Array(N*3);
+      for(var j=0;j<N;j++){var rd=5+Math.random()*9,th=Math.random()*6.283,ph=Math.acos(2*Math.random()-1);pp[j*3]=rd*Math.sin(ph)*Math.cos(th);pp[j*3+1]=rd*Math.sin(ph)*Math.sin(th)*.7;pp[j*3+2]=rd*Math.cos(ph)-4}
+      var pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
+      var dc=document.createElement('canvas');dc.width=dc.height=32;var dx=dc.getContext('2d');dx.beginPath();dx.arc(16,16,14,0,7);dx.fillStyle='#fff';dx.fill();
+      var pts=new THREE.Points(pg,new THREE.PointsMaterial({color:0x9AA3C7,size:.07,map:new THREE.CanvasTexture(dc),alphaTest:.3,transparent:true,opacity:.55,depthWrite:false}));scene.add(pts);
+
+      var baseX=2.2,baseY=0,baseS=1;
+      function layout(){
+        var w=innerWidth,h=innerHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();
+        var vh=2*Math.tan(20*Math.PI/180)*8,vw=vh*cam.aspect;
+        if(w<900){baseX=0;baseY=vh*.24;baseS=Math.min(.72,vw/2.2*.8)}else{baseX=vw*.24;baseY=0;baseS=Math.min(1,vh/3.6)}
+      }
+      layout();addEventListener('resize',function(){layout();haveGsap&&ScrollTrigger.refresh()});
+      addEventListener('pointermove',function(e){S.mx=(e.clientX/innerWidth-.5)*2;S.my=(e.clientY/innerHeight-.5)*2},{passive:true});
+
+      var clock=new THREE.Clock(),frameN=0;
+      function frame(){
+        requestAnimationFrame(frame);if(document.hidden)return;
+        var t=clock.getElapsedTime();frameN++;
+        var e=S.enter;
+        phone.position.set(baseX,baseY+S.exit*10-(1-e)*7,0);
+        var sc2=baseS*(.7+.3*e);phone.scale.set(sc2,sc2,sc2);
+        phone.rotation.y=-.32+S.spin+S.mx*.35+Math.sin(t*.6)*.1;
+        phone.rotation.x=.06+S.my*.14;phone.rotation.z=Math.sin(t*.5)*.025;
+        phone.position.y+=Math.sin(t*1.1)*.06;
+        orbit.position.copy(phone.position);orbit.scale.set(sc2,sc2,sc2);
+        chips.forEach(function(s,i){if(i>=nChips)return;var a=t*.5+i*(6.2832/nChips);s.position.set(Math.cos(a)*1.3,Math.sin(a*1.3+i)*1.1,Math.sin(a)*1.3);s.material.opacity=.35+.65*(Math.sin(a)*.5+.5)});
+        pts.rotation.y=t*.02+S.mx*.08;pts.rotation.x=S.my*.05;
+        if(frameN%2===0){paint(t);tex.needsUpdate=true}
+        R.render(scene,cam);
+      }
+      paint(0);tex.needsUpdate=true;frame();
+      G={ok:true,key:key,rim:rim,THREE:THREE,setChips:setChips,COL:COL};
+      root.classList.add('gl-on');
+    }catch(err){G={ok:false};if(cv)cv.style.display='none'}
+  }
+  init3D();
+
+  /* ================= small things that never need libraries ================= */
+  var bar=document.getElementById('bar'),cur=document.getElementById('cur');
+  function onScroll(){var h=root.scrollHeight-innerHeight;bar.style.width=(h>0?scrollY/h*100:0)+'%'}
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+  addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;cur.classList.add('on');cur.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)';
+    var t=e.target.closest&&e.target.closest('a,.btn,.skill,button');cur.classList.toggle('big',!!t)},{passive:true});
+  document.querySelectorAll('.skill').forEach(function(s){s.addEventListener('pointermove',function(e){var r=s.getBoundingClientRect();s.style.setProperty('--x',(e.clientX-r.left)+'px');s.style.setProperty('--y',(e.clientY-r.top)+'px')})});
+  document.querySelectorAll('.proof b').forEach(function(b){
+    var n=+b.dataset.n,pre=b.dataset.pre||'';
+    function go(){var t0=null;(function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/1300,1);b.textContent=pre+Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(performance.now())}
+    if('IntersectionObserver' in window){var o=new IntersectionObserver(function(en){if(en[0].isIntersecting){go();o.disconnect()}});o.observe(b)}
+  });
+
+  /* ================= GSAP: loader, hero intro, pinned story ================= */
+  var ld=document.getElementById('loader'),pc=document.getElementById('lpct');
+  function intro(){
+    if(!haveGsap||reduce)return;
+    gsap.from('.hl .ln>span',{yPercent:115,duration:1.2,stagger:.1,ease:'power4.out'});
+    gsap.from('.hero p.lead,.hero .cta,.hint',{y:30,opacity:0,duration:1,stagger:.12,delay:.5,ease:'power3.out'});
+    if(G.ok){S.spin=-Math.PI*3;gsap.to(S,{enter:1,spin:0,duration:2.2,ease:'expo.out'})}
+  }
+  if(haveGsap&&!reduce&&ld&&pc){
+    root.classList.add('js-load');var o={v:0};
+    gsap.to(o,{v:100,duration:1.3,ease:'power2.inOut',onUpdate:function(){pc.textContent=Math.round(o.v)},
+      onComplete:function(){gsap.to(ld,{yPercent:-100,duration:.9,ease:'power4.inOut',onStart:intro,onComplete:function(){root.classList.remove('js-load');ld.style.display='none'}})}});
+    setTimeout(function(){root.classList.remove('js-load');ld.style.display='none'},4000);
+    setTimeout(function(){if(S.enter<1){gsap.killTweensOf(S);S.enter=1;S.spin=0}},5200);
+  }else{S.enter=1}
+  if(!haveGsap||reduce){var rv=document.querySelectorAll('.panel');rv.forEach(function(p){p.classList.add('active')});return}
+
+  gsap.registerPlugin(ScrollTrigger);
+  var br=document.getElementById('brand');
+  if(br)br.addEventListener('click',function(){if(G.ok)gsap.to(S,{spin:'+='+(Math.PI*2),duration:1.4,ease:'power3.inOut'})});
+
+  document.querySelectorAll('.reveal').forEach(function(el){
+    gsap.from(el,{y:70,duration:1.1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+  });
+  gsap.fromTo('.cta-band',{scale:.92},{scale:1,ease:'none',scrollTrigger:{trigger:'.cta-band',start:'top 100%',end:'top 55%',scrub:true}});
+  gsap.to('.hl',{yPercent:-12,ease:'none',scrollTrigger:{trigger:'.herowrap',start:'top top',end:'bottom top',scrub:true}});
+
+  var tr=document.querySelector('.track'),anim=tr&&tr.getAnimations&&tr.getAnimations()[0];
+  if(anim){var cu=1,tg=1;
+    ScrollTrigger.create({start:0,end:'max',onUpdate:function(s){tg=1+Math.min(Math.abs(s.getVelocity())/220,10)}});
+    gsap.ticker.add(function(){tg+=(1-tg)*.04;cu+=(tg-cu)*.1;anim.updatePlaybackRate(cu)});}
+
+  if(G.ok){
+    var panels=[].slice.call(document.querySelectorAll('.panel')),n=panels.length;
+    var cnum=document.getElementById('cnum'),ctrk=document.getElementById('ctrk');
+    panels[0].classList.add('active');
+    var C=G.COL,STK={
+      gold:[['Flutter',C.a3],['NestJS',C.a4],['PostgreSQL',C.a2],['FCM',C.a1],['Next.js',C.a3]],
+      flip:[['React Native',C.a1],['Reanimated',C.a4],['React Query',C.a2],['NestJS',C.a3]],
+      map:[['React Native',C.a1],['MobX',C.a2],['Mapbox GL',C.a3]],
+      pos:[['Kotlin',C.a2],['Room',C.a3],['PAX · Sunmi',C.a1],['ESC/POS',C.a4]],
+      quip:[['React Native',C.a1],['Redux-Saga',C.a2],['Stripe',C.a4],['Google Maps',C.a3],['Sentry',C.a2]],
+      quiz:[['WordPress',C.a3],['PHP',C.a4],['Docker',C.a2],['WP-CLI',C.a1]]},
+    STACK=panels.map(function(pn){return STK[pn.dataset.screen]});
+    var HERO=[['React Native',C.a1],['Next.js',C.a3],['WordPress',C.a2],['NestJS',C.a4],['Flutter',C.a3]];
+    var lit=new G.THREE.Color();
+    function go(i){
+      if(i===S.idx)return;var old=S.idx;S.idx=i;
+      gsap.to(panels[old],{opacity:0,y:-40,duration:.35,ease:'power2.in',onComplete:function(){panels[old].classList.remove('active');gsap.set(panels[old],{clearProps:'all'})}});
+      panels[i].classList.add('active');gsap.fromTo(panels[i],{opacity:0,y:50},{opacity:1,y:0,duration:.7,delay:.3,ease:'power3.out'});
+      S.next=i;gsap.killTweensOf(S,'mix');S.mix=0;
+      gsap.to(S,{mix:1,duration:.5,delay:.35,ease:'power1.inOut',onComplete:function(){S.cur=i;S.mix=0}});
+      gsap.to(S,{spin:'+='+(Math.PI*2),duration:1.3,ease:'power3.inOut',overwrite:false});
+      lit.set(panels[i].dataset.hue);gsap.to(G.key.color,{r:lit.r,g:lit.g,b:lit.b,duration:.8});
+      cnum.textContent='0'+(i+1);G.setChips(STACK[i]);
+    }
+    
+    ScrollTrigger.create({trigger:'.story',start:'top top',end:function(){return '+='+(innerHeight*n*.85)},pin:'.story-inner',scrub:true,
+      onToggle:function(self){G.setChips(self.isActive?STACK[S.idx]:HERO)},
+      onUpdate:function(s){go(Math.min(n-1,Math.floor(s.progress*n*.999)));ctrk.style.transform='scaleX('+s.progress+')'}});
+    gsap.to(S,{exit:1,ease:'none',scrollTrigger:{trigger:'#dich-vu',start:'top 90%',end:'top 25%',scrub:true}});
+  }
+})();
+</script>
