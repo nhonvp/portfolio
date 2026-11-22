@@ -54,7 +54,8 @@ header.top{display:flex;justify-content:space-between;align-items:center;gap:16p
 .brand i{font-style:normal;color:var(--a1)}
 nav{display:flex;gap:6px;margin-left:auto;margin-right:16px}
 nav a{font-size:14px;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:999px;transition:background .2s,color .2s}
-nav a:hover{background:var(--surface2);color:var(--ink)}
+nav a:hover,nav a.on{background:var(--surface2);color:var(--ink)}
+nav a.on{box-shadow:inset 0 -2px 0 var(--a1)}
 
 /* HERO */
 .hero{min-height:calc(100vh - 80px);min-height:calc(100svh - 80px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:center;padding-block:24px 56px}
@@ -306,45 +307,45 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
 <div class="wrap">
   <section class="story" id="du-an">
     <div class="story-inner">
-      <div class="head"><div class="eyebrow">Dự án</div><h2>Dự án nổi bật.</h2><p>Các app và website mình đã tham gia làm. Bấm vào ảnh app để xem màn hình thật.</p></div>
+      <div class="head reveal"><div class="eyebrow">Dự án</div><h2>Dự án nổi bật.</h2><p>Các app và website mình đã tham gia làm. Bấm vào ảnh app để xem màn hình thật.</p></div>
       <p class="fallnote">Trình duyệt này không hiển thị được cảnh 3D, nên các dự án được liệt kê dạng danh sách.</p>
 
-      <article class="panel" data-screen="pos" style="--c:var(--a1)" data-hue="#FF6B8B">
+      <article class="panel reveal" data-screen="pos" style="--c:var(--a1)" data-hue="#FF6B8B">
         <button class="cover" type="button" data-app="pos" data-n="6" aria-label="Xem 6 ảnh"><img src="shots/pos-1.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/pos-2.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/pos-3.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><span class="zoom"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="3" y="5" width="14" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>6</span></span></button>
         <div class="kind">Công ty · Hệ thống POS</div><h3>RICH Salon POS</h3><span class="role">Mobile Engineer</span>
         <dl class="cs"><div><dt>Bài toán</dt><dd>Cửa hàng cần bán hàng, in hóa đơn và thanh toán ổn định, kể cả khi mất mạng.</dd></div><div><dt>Mình làm</dt><dd>React Native cho Android, iOS, Clover, cập nhật nóng bằng CodePush. Bản Kotlin cho PAX, Sunmi, Clover, Valor: máy in nhiệt ESC/POS, ngăn kéo tiền, quét mã, offline-first bằng Room.</dd></div><div><dt>Khách nhận</dt><dd>App chạy trên thiết bị POS thật, có unit test, E2E và pipeline build tự động.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App bán hàng hoặc POS cần tích hợp máy in và máy thanh toán.</dd></div></dl>
         <ul class="tags"><li>React Native</li><li>Kotlin</li><li>Room</li><li>CameraX</li><li>CI/CD</li></ul>
         <div class="links" data-for="pos"></div>
       </article>
-      <article class="panel" data-screen="quip" style="--c:var(--a4)" data-hue="#8B7CFF">
+      <article class="panel reveal" data-screen="quip" style="--c:var(--a4)" data-hue="#8B7CFF">
         <button class="cover" type="button" data-app="babyquip" data-n="6" aria-label="Xem 6 ảnh"><img src="shots/babyquip-1.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/babyquip-2.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/babyquip-3.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><span class="zoom"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="3" y="5" width="14" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>6</span></span></button>
         <div class="kind">Công ty · Đặt thuê đồ cho trẻ</div><h3>BabyQuip</h3><span class="role">Mobile Engineer</span>
         <dl class="cs"><div><dt>Bài toán</dt><dd>Gia đình cần thuê đồ cho trẻ khi đi du lịch, đặt lịch và nhắn với nhà cung cấp ngay trong app.</dd></div><div><dt>Mình làm</dt><dd>Tham gia từ đầu đến khi phát hành trong team 14 người: phát triển luồng đặt thuê, tích hợp Stripe và Google Maps SDK, thông báo đẩy, Socket.io, theo dõi lỗi bằng Sentry, viết unit test và tối ưu hiệu năng.</dd></div><div><dt>Khách nhận</dt><dd>App React Native chạy trên iOS và Android, đã có trên App Store và Google Play.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App đặt lịch hoặc marketplace có thanh toán Stripe và bản đồ.</dd></div></dl>
         <ul class="tags"><li>React Native</li><li>Redux-Saga</li><li>Stripe</li><li>Google Maps</li><li>Sentry</li></ul>
         <div class="links" data-for="babyquip"></div>
       </article>
-      <article class="panel" data-screen="gold" style="--c:var(--a2)" data-hue="#FFC857">
+      <article class="panel reveal" data-screen="gold" style="--c:var(--a2)" data-hue="#FFC857">
         <div class="cover ph" aria-hidden="true"><b>SaviGold</b><small>Backend · Admin · Flutter</small></div>
         <div class="kind">Freelance · Backend + Admin + App</div><h3>SaviGold</h3><span class="role">Full-stack</span>
         <dl class="cs"><div><dt>Bài toán</dt><dd>Người dùng cần theo dõi giá vàng, biết lãi/lỗ danh mục và được báo khi giá chạm mức đã đặt.</dd></div><div><dt>Mình làm</dt><dd>Backend NestJS có bộ thu thập giá chạy theo lịch và gửi thông báo FCM. Sổ vàng, chat cộng đồng, trang admin và app Flutter (Dio tự làm mới token, đăng nhập Apple).</dd></div><div><dt>Khách nhận</dt><dd>API, trang admin và app iOS/Android trọn gói từ một người.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App có thông báo theo điều kiện, dữ liệu cập nhật theo lịch, kèm trang quản trị.</dd></div></dl>
         <ul class="tags"><li>NestJS</li><li>PostgreSQL</li><li>TypeORM</li><li>Next.js</li><li>Flutter</li><li>FCM</li></ul>
         <div class="links" data-for="savigold"></div>
       </article>
-      <article class="panel" data-screen="flip" style="--c:var(--a4)" data-hue="#8B7CFF">
+      <article class="panel reveal" data-screen="flip" style="--c:var(--a4)" data-hue="#8B7CFF">
         <button class="cover" type="button" data-app="datadude" data-n="5" aria-label="Xem 5 ảnh"><img src="shots/datadude-1.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/datadude-2.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/datadude-3.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><span class="zoom"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="3" y="5" width="14" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>5</span></span></button>
         <div class="kind">Freelance · App + API</div><h3>DataDude</h3><span class="role">Full-stack</span>
         <dl class="cs"><div><dt>Bài toán</dt><dd>App học tập có nhiều nội dung, phải mượt khi cuộn và có cảm giác tương tác.</dd></div><div><dt>Mình làm</dt><dd>Thẻ lật, thanh tiến độ, cử chỉ và lộ trình bằng Reanimated. Dữ liệu qua React Query: cuộn vô hạn, đồng bộ nền, cache. API NestJS cho xác thực, upload, xử lý media, push.</dd></div><div><dt>Khách nhận</dt><dd>App React Native cùng API, migration và seeder đã quản lý sẵn.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App nội dung hoặc học tập, tương tác nhiều, cần API đi kèm.</dd></div></dl>
         <ul class="tags"><li>React Native</li><li>React Query</li><li>NestJS</li><li>Sequelize</li><li>JWT</li></ul>
         <div class="links" data-for="datadude"></div>
       </article>
-      <article class="panel" data-screen="map" style="--c:var(--a3)" data-hue="#36D7C0">
+      <article class="panel reveal" data-screen="map" style="--c:var(--a3)" data-hue="#36D7C0">
         <button class="cover" type="button" data-app="mobiland" data-n="6" aria-label="Xem 6 ảnh"><img src="shots/mobiland-1.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/mobiland-2.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/mobiland-3.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><span class="zoom"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="3" y="5" width="14" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>6</span></span></button>
         <div class="kind">Freelance · Mobile</div><h3>Mobiland</h3><span class="role">Mobile</span>
         <dl class="cs"><div><dt>Bài toán</dt><dd>Vẽ vùng và xem nhiều điểm bất động sản trên bản đồ mà không giật, kể cả máy yếu.</dd></div><div><dt>Mình làm</dt><dd>State realtime bằng MobX. Mapbox GL: vẽ polygon, gom cụm, bản đồ offline, 3D extrusion, geocoding.</dd></div><div><dt>Khách nhận</dt><dd>Bộ tính năng bản đồ trọn gói, đã tối ưu cho máy cấu hình thấp.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>App bản đồ: bất động sản, địa điểm, giao hàng, theo dõi vị trí.</dd></div></dl>
         <ul class="tags"><li>React Native</li><li>MobX</li><li>Mapbox GL</li></ul>
         <div class="links" data-for="mobiland"></div>
       </article>
-      <article class="panel" data-screen="quiz" style="--c:var(--a3)" data-hue="#36D7C0">
+      <article class="panel reveal" data-screen="quiz" style="--c:var(--a3)" data-hue="#36D7C0">
         <div class="cover ph" aria-hidden="true"><b>Nihongo</b><small>WordPress · Plugin tự viết</small></div>
         <div class="kind">Dự án cá nhân · Web</div><h3>Nihongo Học Viên</h3><span class="role">WordPress</span>
         <dl class="cs"><div><dt>Bài toán</dt><dd>Học viên cần ôn đề có giải thích bằng tiếng Việt và được chấm điểm ngay.</dd></div><div><dt>Mình làm</dt><dd>Tự viết plugin WordPress: quiz có giải thích, chấm điểm trên web, flashcard lật thẻ. Dựng bằng Docker và WP-CLI.</dd></div><div><dt>Khách nhận</dt><dd>Website, plugin và script cài đặt tự động, có bản sao lưu trước khi nâng cấp.</dd></div><div><dt>Hợp nếu bạn cần</dt><dd>Website WordPress nhỏ cần một tính năng riêng viết tay.</dd></div></dl>
@@ -517,7 +518,9 @@ var LINKS={
     if(b){last=b;g.textContent='';var n=+b.dataset.n,a=b.dataset.app;
       var h=b.closest('.panel');t.textContent=(h&&h.querySelector('h3')?h.querySelector('h3').textContent:'')+' · App Store';
       for(var i=1;i<=n;i++){var im=new Image();im.src='shots/'+a+'-'+i+'.webp';im.alt=t.textContent+' '+i;im.width=420;im.height=913;g.appendChild(im)}
-      lb.classList.add('on');document.getElementById('lbx').focus();return}
+      lb.classList.add('on');document.getElementById('lbx').focus();
+      if(window.gsap&&!matchMedia('(prefers-reduced-motion:reduce)').matches){gsap.fromTo(lb,{opacity:0},{opacity:1,duration:.25});gsap.fromTo(g.children,{y:28,opacity:0,scale:.96},{y:0,opacity:1,scale:1,duration:.55,stagger:.06,ease:'power3.out',delay:.05})}
+      return}
     if(e.target===lb||e.target.id==='lbx')close();
   });
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb.classList.contains('on'))close()});
@@ -526,6 +529,7 @@ var LINKS={
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 <script>
 (function(){
   var root=document.documentElement;
@@ -749,9 +753,26 @@ var LINKS={
   var br=document.getElementById('brand');
   if(br)br.addEventListener('click',function(){if(G.ok)gsap.to(S,{spin:'+='+(Math.PI*2),duration:1.4,ease:'power3.inOut'})});
 
-  document.querySelectorAll('.reveal').forEach(function(el){
-    gsap.from(el,{y:70,duration:1.1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
-  });
+  if(window.ScrollToPlugin)gsap.registerPlugin(ScrollToPlugin);
+  /* blocks enter in small staggered groups (cheap: opacity + transform only) */
+  gsap.set('.reveal',{opacity:0,y:38});
+  ScrollTrigger.batch('.reveal',{start:'top 90%',once:true,batchMax:4,interval:.08,
+    onEnter:function(b){gsap.to(b,{opacity:1,y:0,duration:.9,stagger:.09,ease:'power3.out',overwrite:true,
+      onComplete:function(){b.forEach(function(el){gsap.set(el,{clearProps:el.classList.contains('cta-band')?'opacity':'opacity,transform'})})}})}});
+  /* smooth anchor scrolling */
+  if(window.ScrollToPlugin)document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){var id=a.getAttribute('href');if(!id||id.length<2)return;var t=document.querySelector(id);if(!t)return;
+      e.preventDefault();gsap.to(window,{scrollTo:{y:t,offsetY:12,autoKill:true},duration:1.1,ease:'power3.inOut'});
+      if(history.replaceState)history.replaceState(null,'',id)})});
+  /* nav highlights the section being read */
+  document.querySelectorAll('header.top nav a').forEach(function(a){
+    var t=document.querySelector(a.getAttribute('href'));if(!t)return;
+    ScrollTrigger.create({trigger:t,start:'top 55%',end:'bottom 55%',onToggle:function(self){a.classList.toggle('on',self.isActive)}})});
+  /* buttons lean toward the pointer (mouse only) */
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches)document.querySelectorAll('.btn,.contact a,.contact button').forEach(function(el){
+    var xt=gsap.quickTo(el,'x',{duration:.5,ease:'power3'}),yt=gsap.quickTo(el,'y',{duration:.5,ease:'power3'});
+    el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect();xt((e.clientX-r.left-r.width/2)*.2);yt((e.clientY-r.top-r.height/2)*.28)});
+    el.addEventListener('pointerleave',function(){xt(0);yt(0)})});
   if(!lite){gsap.fromTo('.cta-band',{scale:.92},{scale:1,ease:'none',scrollTrigger:{trigger:'.cta-band',start:'top 100%',end:'top 55%',scrub:true}});
   gsap.to('.hl',{yPercent:-12,ease:'none',scrollTrigger:{trigger:'.herowrap',start:'top top',end:'bottom top',scrub:true}})}
 
