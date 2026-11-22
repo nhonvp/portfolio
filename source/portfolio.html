@@ -35,7 +35,7 @@ h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.04;text-wrap:balanc
 
 
 header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px}
-.brand{font-family:var(--f-display);font-weight:800;font-size:20px;letter-spacing:-.01em;cursor:pointer;background:none;border:0;color:inherit;padding:0}
+.brand{font-family:var(--f-display);font-weight:800;font-size:20px;letter-spacing:-.01em;cursor:pointer;background:none;border:0;color:inherit;padding:10px 0}
 .brand i{font-style:normal;color:var(--a1)}
 nav{display:flex;gap:6px;margin-left:auto;margin-right:16px}
 nav a{font-size:14px;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:999px;transition:background .2s,color .2s}
@@ -57,9 +57,6 @@ nav a.on{box-shadow:inset 0 -2px 0 var(--a1)}
 .btn.primary:hover{box-shadow:0 10px 34px -8px var(--a1)}
 .btn.ghost{color:var(--ink);border-color:var(--line);background:rgba(7,11,24,.5)}
 .btn.ghost:hover{border-color:var(--ink)}
-.hint{position:absolute;left:0;bottom:18px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:flex;gap:10px;align-items:center}
-.hint i{display:block;width:1px;height:34px;background:linear-gradient(var(--a1),transparent);animation:drip 2s ease-in-out infinite}
-@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 .herowrap{position:relative}
 
 .proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);background:rgba(7,11,24,.92)}
@@ -122,11 +119,11 @@ nav a.on{box-shadow:inset 0 -2px 0 var(--a1)}
 .cs dd{margin:0;color:#C3CBE8;font-size:14.5px;line-height:1.55}
 .panel .go{display:inline-flex;margin-top:18px;color:var(--c);font-weight:600;text-decoration:none;font-size:14.5px;border-bottom:1px solid var(--c);align-self:flex-start;padding-bottom:2px}
 .lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:rgba(16,22,46,.92)}
-.lang button{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;border:0;background:none;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+.lang button{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;border:0;background:none;color:var(--muted);padding:10px 14px;border-radius:999px;cursor:pointer}
 .lang button[aria-pressed="true"]{background:var(--a1);color:var(--on-a1);font-weight:500}
 .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .links:empty{display:none}
-.links a{font-size:13px;font-weight:600;text-decoration:none;padding:7px 14px;border-radius:999px;border:1px solid var(--c);color:var(--c);transition:background .2s,color .2s}
+.links a{font-size:13px;font-weight:600;text-decoration:none;padding:11px 16px;border-radius:999px;border:1px solid var(--c);color:var(--c);transition:background .2s,color .2s}
 .links a:hover{background:var(--c);color:#0B0F20}
 .contact-h{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-top:0;position:relative;z-index:1}
 .contact{display:flex;flex-wrap:wrap;gap:10px;position:relative;z-index:1}
@@ -142,19 +139,6 @@ nav a.on{box-shadow:inset 0 -2px 0 var(--a1)}
 @media (max-width:640px){.dock{gap:10px;right:max(10px,env(safe-area-inset-right,0px));top:calc(84px + env(safe-area-inset-top,0px));transform:none}.dock a{width:48px;height:48px}.dock a:not(:first-child){display:none}.dock a svg{width:26px;height:26px}.dock a::after{display:none}}
 .vl{display:none}
 .vl.on{display:inline-flex}
-.fallnote{display:none}
-.gl-on .fallnote{display:none}
-.counter{display:none}
-.gl-on .story-inner{height:100vh;height:100svh;overflow-x:clip}
-.gl-on .panel{position:absolute;left:0;top:0;bottom:0;width:min(470px,42%);margin:0;display:flex;flex-direction:column;justify-content:center;opacity:0;visibility:hidden;background:none;border:0;padding:0}
-.gl-on .panel.active{opacity:1;visibility:visible}
-.gl-on .story .head{position:absolute;top:0;left:0;padding:36px 0 0;z-index:3}
-.gl-on .story .head h2{font-size:clamp(22px,2.6vw,32px)}
-.gl-on .story .head p{display:none}
-.gl-on .counter{display:flex;position:absolute;left:0;bottom:26px;gap:16px;align-items:center;font-family:var(--f-mono);font-size:13px;color:var(--muted);z-index:3;width:min(470px,42%)}
-.counter .trk{flex:1;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
-.counter .trk i{display:block;height:100%;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));transform-origin:left;transform:scaleX(0)}
-.counter b{color:var(--ink)}
 
 section.s{padding-block:88px 24px;position:relative;z-index:2}
 .sec-head{margin-bottom:44px;max-width:720px}
@@ -179,10 +163,7 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
 .get li{position:relative;padding-left:20px;color:#B9C1E0;font-size:14px;line-height:1.55}
 .get li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:2px;background:var(--c);border-radius:2px}
 .price{font-family:var(--f-mono);font-size:13px;color:var(--ink);border-top:1px solid var(--line);padding-top:14px}
-.svc .go{display:inline-flex;margin-top:12px;color:var(--c);font-weight:600;text-decoration:none;font-size:14.5px;border-bottom:1px solid var(--c);align-self:flex-start}
-.need{margin-top:20px;background:var(--surface);border:1px dashed var(--line);border-radius:20px;padding:24px}
-.need h3{font-size:20px;margin-bottom:12px}
-.need ul{margin:0;padding-left:18px;color:var(--muted);display:grid;gap:6px;font-size:14.5px}
+.svc .go{display:inline-flex;margin-top:6px;padding-block:10px;color:var(--c);font-weight:600;text-decoration:none;font-size:14.5px;border-bottom:1px solid var(--c);align-self:flex-start}
 @media (max-width:1100px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.svc{grid-template-columns:minmax(0,1fr)}}
 .webgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
@@ -190,9 +171,6 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
 .webgrid .card h3{font-size:24px}
 .webgrid .card p{margin:0 0 16px}
 .webgrid .card .go{display:inline-flex;margin-top:18px;color:var(--c);font-weight:600;text-decoration:none;font-size:14.5px;border-bottom:1px solid var(--c)}
-.shotbtn{display:none;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;margin-top:14px;font:inherit;font-size:13px;font-weight:600;color:var(--c);background:none;border:1px solid var(--c);border-radius:999px;padding:7px 14px;cursor:pointer;transition:background .2s,color .2s}
-.shotbtn::before{content:"";width:12px;height:12px;border:2px solid currentColor;border-radius:3px}
-.shotbtn:hover{background:var(--c);color:#0B0F20}
 .lb{position:fixed;inset:0;z-index:95;background:rgba(4,7,16,.92);display:none;align-items:center;justify-content:center;padding:16px;overscroll-behavior:contain}
 .lb.on{display:flex}
 .lbin{position:relative;width:min(1000px,100%);max-height:100%;overflow:auto}
@@ -226,21 +204,12 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
   .skills,.built,.about,.webgrid{grid-template-columns:minmax(0,1fr)}
   .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
   .cta-band{grid-template-columns:minmax(0,1fr)}
-  .gl-on .panel{top:auto;bottom:0;left:0;right:0;width:auto;padding:70px 0 70px;justify-content:flex-end;background:linear-gradient(transparent,var(--bg) 38%)}
-  .gl-on .panel h3{font-size:40px;margin:6px 0 10px}
-  .gl-on .cs div:nth-child(2){display:none}
-  .gl-on .cs dd{font-size:13.5px}
-  .gl-on .cs div{grid-template-columns:84px minmax(0,1fr)}
-  .gl-on .counter{width:auto;right:0;bottom:30px}
-  .gl-on .panel{max-width:100%;min-width:0}
   .hero>div:first-child{background:linear-gradient(transparent,rgba(7,11,24,.88) 22%);padding-top:56px;margin-inline:-16px;padding-inline:16px}
-  .gl-on .story .head{padding-top:20px}
   section.s{padding-block:64px 16px}
   .grad{animation:none}
   .cta-band::after{animation:none}
 }
 @media (max-width:900px){.marq{mask-image:none}}
-.lite .fallnote{display:none}
 .lite .story .head{padding-block:56px 20px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
@@ -291,7 +260,6 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
   <section class="story" id="du-an">
     <div class="story-inner">
       <div class="head reveal"><div class="eyebrow">Dự án</div><h2>Dự án nổi bật.</h2><p>Các app và website mình đã tham gia làm. Bấm vào ảnh app để xem màn hình thật.</p></div>
-      <p class="fallnote">Trình duyệt này không hiển thị được cảnh 3D, nên các dự án được liệt kê dạng danh sách.</p>
 
       <article class="panel reveal" data-screen="pos" style="--c:var(--a1)" data-hue="#FF6B8B">
         <button class="cover" type="button" data-app="pos" data-n="6" aria-label="Xem 6 ảnh"><img src="shots/pos-1.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/pos-2.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><img src="shots/pos-3.webp" width="420" height="913" loading="lazy" decoding="async" alt=""><span class="zoom"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="3" y="5" width="14" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3h11a2 2 0 0 1 2 2v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>6</span></span></button>
@@ -336,7 +304,6 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
         <div class="links" data-for="nihongo"></div>
       </article>
 
-      <div class="counter" aria-hidden="true"><span><b id="cnum">01</b> / 06</span><div class="trk"><i id="ctrk"></i></div></div>
     </div>
   </section>
 
@@ -509,7 +476,7 @@ var LINKS={
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb.classList.contains('on'))close()});
 })();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>if(!matchMedia('(max-width:900px), (pointer:coarse) and (max-width:1100px)').matches)document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
