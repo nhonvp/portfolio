@@ -113,6 +113,7 @@ nav a:hover{background:var(--surface2);color:var(--ink)}
 .cover.ph{cursor:default;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;padding:20px;background:linear-gradient(160deg,var(--c),color-mix(in srgb,var(--c) 30%,var(--bg)))}
 .cover.ph b{font-family:var(--f-display);font-size:34px;letter-spacing:-.03em;color:#0B0F20}
 .cover.ph small{font-family:var(--f-mono);font-size:12px;color:#0B0F20;opacity:.8}
+.gl-hero .heroshots{visibility:hidden}
 .heroshots{position:relative;height:min(520px,62vh)}
 .heroshots img{position:absolute;width:44%;height:auto;border-radius:22px;border:1px solid var(--line);box-shadow:0 30px 60px -22px rgba(0,0,0,.75)}
 .heroshots img:nth-child(1){left:0;top:12%;transform:rotate(-7deg)}
@@ -531,7 +532,7 @@ var LINKS={
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var haveGsap=!!(window.gsap&&window.ScrollTrigger);
   /* phones/tablets: no WebGL loop, no pinned scene, no scroll-scrubbed effects. Plain native scrolling. */
-  var lite=true;
+  var lite=matchMedia('(max-width:900px), (pointer:coarse) and (max-width:1100px)').matches;
   if(lite){root.classList.add('lite');var _c=document.getElementById('gl');if(_c)_c.style.display='none'}
   var S={cur:0,next:0,mix:0,spin:0,exit:0,enter:reduce?1:0,mx:0,my:0,idx:0};
   var G={ok:false};
@@ -700,7 +701,7 @@ var LINKS={
       function frame(){
         requestAnimationFrame(frame);if(document.hidden)return;
         var t=clock.getElapsedTime();frameN++;
-        if(S.exit>=1&&frameN%3)return;
+        if(S.exit>=1&&frameN%2)return;
         var e=S.enter;
         phone.position.set(baseX,baseY+S.exit*10-(1-e)*7,0);
         var sc2=baseS*(.7+.3*e);phone.scale.set(sc2,sc2,sc2);
@@ -715,7 +716,7 @@ var LINKS={
       }
       paint(0);tex.needsUpdate=true;frame();
       G={ok:true,key:key,rim:rim,THREE:THREE,setChips:setChips,COL:COL};
-      root.classList.add('gl-on');
+      root.classList.add('gl-hero');
     }catch(err){G={ok:false};if(cv)cv.style.display='none'}
   }
   init3D();
@@ -760,34 +761,9 @@ var LINKS={
     var lr=1;gsap.ticker.add(function(){tg+=(1-tg)*.04;cu+=(tg-cu)*.1;if(Math.abs(cu-lr)>.02){lr=cu;anim.updatePlaybackRate(cu)}});}
 
   if(G.ok){
-    var panels=[].slice.call(document.querySelectorAll('.panel')),n=panels.length;
-    var cnum=document.getElementById('cnum'),ctrk=document.getElementById('ctrk');
-    panels[0].classList.add('active');
-    var C=G.COL,STK={
-      gold:[['Flutter',C.a3],['NestJS',C.a4],['PostgreSQL',C.a2],['FCM',C.a1],['Next.js',C.a3]],
-      flip:[['React Native',C.a1],['Reanimated',C.a4],['React Query',C.a2],['NestJS',C.a3]],
-      map:[['React Native',C.a1],['MobX',C.a2],['Mapbox GL',C.a3]],
-      pos:[['Kotlin',C.a2],['Room',C.a3],['PAX · Sunmi',C.a1],['ESC/POS',C.a4]],
-      quip:[['React Native',C.a1],['Redux-Saga',C.a2],['Stripe',C.a4],['Google Maps',C.a3],['Sentry',C.a2]],
-      quiz:[['WordPress',C.a3],['PHP',C.a4],['Docker',C.a2],['WP-CLI',C.a1]]},
-    STACK=panels.map(function(pn){return STK[pn.dataset.screen]});
-    var HERO=[['React Native',C.a1],['Next.js',C.a3],['WordPress',C.a2],['NestJS',C.a4],['Flutter',C.a3]];
-    var lit=new G.THREE.Color();
-    function go(i){
-      if(i===S.idx)return;var old=S.idx;S.idx=i;
-      gsap.to(panels[old],{opacity:0,y:-40,duration:.35,ease:'power2.in',onComplete:function(){panels[old].classList.remove('active');gsap.set(panels[old],{clearProps:'all'})}});
-      panels[i].classList.add('active');gsap.fromTo(panels[i],{opacity:0,y:50},{opacity:1,y:0,duration:.7,delay:.3,ease:'power3.out'});
-      S.next=i;gsap.killTweensOf(S,'mix');S.mix=0;
-      gsap.to(S,{mix:1,duration:.5,delay:.35,ease:'power1.inOut',onComplete:function(){S.cur=i;S.mix=0}});
-      gsap.to(S,{spin:'+='+(Math.PI*2),duration:1.3,ease:'power3.inOut',overwrite:false});
-      lit.set(panels[i].dataset.hue);gsap.to(G.key.color,{r:lit.r,g:lit.g,b:lit.b,duration:.8});
-      cnum.textContent='0'+(i+1);G.setChips(STACK[i]);
-    }
-    
-    ScrollTrigger.create({trigger:'.story',start:'top top',end:function(){return '+='+(innerHeight*n*.85)},pin:'.story-inner',scrub:true,anticipatePin:1,
-      onToggle:function(self){G.setChips(self.isActive?STACK[S.idx]:HERO)},
-      onUpdate:function(s){go(Math.min(n-1,Math.floor(s.progress*n*.999)));ctrk.style.transform='scaleX('+s.progress+')'}});
-    gsap.to(S,{exit:1,ease:'none',scrollTrigger:{trigger:'#dich-vu',start:'top 90%',end:'top 25%',scrub:true}});
+    var C=G.COL;G.setChips([['React Native',C.a1],['Next.js',C.a3],['WordPress',C.a2],['NestJS',C.a4],['Flutter',C.a3]]);
+    /* the phone leaves with the hero; the particle background keeps running behind the whole page */
+    gsap.to(S,{exit:1,ease:'none',scrollTrigger:{trigger:'.proof',start:'top 85%',end:'top 15%',scrub:true}});
   }
 })();
 </script>
