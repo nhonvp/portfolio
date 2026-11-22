@@ -11,7 +11,7 @@ start=s.index('<a class="skip"')
 head=s[:s.index('<style>')].replace('<meta name="claude:viewport-fit-sides" content="cover">\n','')
 TITLE='Phạm Văn Nhơn | Mobile, Web & Full-stack Developer'
 DESC='Phạm Văn Nhơn, lập trình viên mobile, web và full-stack: React Native, Flutter, Next.js, WordPress, NestJS. Nhận app, landing page, website WordPress và trang quản trị.'
-URL='https://nhonpham.dev.vercel.app/'
+URL='https://nhonpham.vercel.app/'
 FAV="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070B18'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial' font-weight='800' font-size='30' fill='%23FF6B8B'%3En.%3C/text%3E%3C/svg%3E"
 head=head.replace('<title>Phạm Văn Nhơn Portfolio</title>','<title>%s</title>'%TITLE)
 meta=('<!doctype html>\n<html lang="vi">\n<head>\n<meta charset="utf-8">\n'
