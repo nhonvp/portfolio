@@ -224,6 +224,9 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
   .grad{animation:none}
   .cta-band::after{animation:none}
 }
+@media (max-width:900px){.marq{mask-image:none}}
+.lite .fallnote{display:none}
+.lite .story .head{padding-block:56px 20px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -495,13 +498,16 @@ var LINKS={
   var root=document.documentElement;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var haveGsap=!!(window.gsap&&window.ScrollTrigger);
+  /* phones/tablets: no WebGL loop, no pinned scene, no scroll-scrubbed effects. Plain native scrolling. */
+  var lite=matchMedia('(max-width:900px), (pointer:coarse) and (max-width:1100px)').matches;
+  if(lite){root.classList.add('lite');var _c=document.getElementById('gl');if(_c)_c.style.display='none'}
   var S={cur:0,next:0,mix:0,spin:0,exit:0,enter:reduce?1:0,mx:0,my:0,idx:0};
   var G={ok:false};
 
   /* ================= 3D PHONE ================= */
   var cv=document.getElementById('gl');
   function init3D(){
-    if(!window.THREE||!cv||reduce)return;
+    if(!window.THREE||!cv||reduce||lite)return;
     try{
       var touch=matchMedia('(pointer:coarse)').matches;
       var R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:!touch,powerPreference:'high-performance'});
@@ -713,11 +719,11 @@ var LINKS={
   document.querySelectorAll('.reveal').forEach(function(el){
     gsap.from(el,{y:70,duration:1.1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
   });
-  gsap.fromTo('.cta-band',{scale:.92},{scale:1,ease:'none',scrollTrigger:{trigger:'.cta-band',start:'top 100%',end:'top 55%',scrub:true}});
-  gsap.to('.hl',{yPercent:-12,ease:'none',scrollTrigger:{trigger:'.herowrap',start:'top top',end:'bottom top',scrub:true}});
+  if(!lite){gsap.fromTo('.cta-band',{scale:.92},{scale:1,ease:'none',scrollTrigger:{trigger:'.cta-band',start:'top 100%',end:'top 55%',scrub:true}});
+  gsap.to('.hl',{yPercent:-12,ease:'none',scrollTrigger:{trigger:'.herowrap',start:'top top',end:'bottom top',scrub:true}})}
 
   var tr=document.querySelector('.track'),anim=tr&&tr.getAnimations&&tr.getAnimations()[0];
-  if(anim){var cu=1,tg=1;
+  if(anim&&!lite){var cu=1,tg=1;
     ScrollTrigger.create({start:0,end:'max',onUpdate:function(s){tg=1+Math.min(Math.abs(s.getVelocity())/220,10)}});
     var lr=1;gsap.ticker.add(function(){tg+=(1-tg)*.04;cu+=(tg-cu)*.1;if(Math.abs(cu-lr)>.02){lr=cu;anim.updatePlaybackRate(cu)}});}
 
