@@ -178,6 +178,40 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
 .lbx{position:absolute;right:0;top:-4px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer}
 .lbg{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px}
 .lbg img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);display:block;background:var(--surface)}
+.svc{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card.feat{background:linear-gradient(150deg,color-mix(in srgb,var(--c) 20%,var(--surface)),var(--surface));border-color:var(--c)}
+.svc .go{border:1px solid var(--c);border-radius:999px;padding:10px 18px;transition:background .2s,color .2s}
+.svc .go:hover{background:var(--c);color:#0B0F20}
+.rules{display:flex;flex-wrap:wrap;gap:10px 22px;margin:22px 0 0;padding:0;list-style:none;font-size:14px;color:var(--muted)}
+.rules li::before{content:"✓";color:var(--a3);margin-right:8px;font-weight:700}
+.stack{display:grid;gap:10px}
+.srow{display:grid;grid-template-columns:190px minmax(0,1fr);gap:16px;align-items:start;padding:16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+.slabel{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--c);padding-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips li{font-size:13.5px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);color:var(--ink)}
+.path{list-style:none;margin:0;padding:0;position:relative}
+.path::before{content:"";position:absolute;left:167px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--a1),var(--a4),transparent)}
+.path li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:36px;position:relative;padding-bottom:30px}
+.path li::before{content:"";position:absolute;left:162px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--bg)}
+.when{font-family:var(--f-mono);font-size:13px;color:var(--muted);padding-top:3px;text-align:right}
+.path h3{font-size:22px}
+.path .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0 8px}
+.badge{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--c);color:#0B0F20}
+.role2{color:var(--muted);font-size:13.5px}
+.path p{margin:0;color:#B9C1E0;font-size:14.5px;max-width:64ch}
+.flow2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none}
+.flow2 li{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:6px}
+.flow2 .n{font-family:var(--f-mono);font-size:12px;color:var(--a1);letter-spacing:.1em}
+.flow2 h3{font-size:22px}
+.flow2 p{margin:0;color:var(--muted);font-size:14.5px}
+.flow2 .ok{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);font-size:14px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.flow2 .ok b{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--a3);font-weight:500}
+.flow2 .ok b::before{content:"✓ "}
+@media (max-width:1100px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.svc{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:900px){.flow2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.srow{grid-template-columns:minmax(0,1fr);gap:8px;padding:14px 16px}.path::before{left:5px}.path li{grid-template-columns:minmax(0,1fr);gap:4px;padding-left:30px}.path li::before{left:0}.when{text-align:left}}
+@media (max-width:560px){.flow2{grid-template-columns:minmax(0,1fr)}}
 .about{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .about{grid-template-columns:repeat(2,minmax(0,1fr))}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px}
@@ -223,7 +257,7 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
 <div class="wrap">
   <header class="top">
     <button class="brand" id="brand" type="button" title="Bấm để xoay điện thoại" aria-label="Xoay điện thoại 3D">nhơn<i>.</i>dev</button>
-    <nav><a href="#du-an">Dự án</a><a href="#dich-vu">Dịch vụ</a><a href="#nang-luc">Năng lực</a><a href="#quy-trinh">Quy trình</a><a href="#hop-tac">Hợp tác</a></nav>
+    <nav><a href="#du-an">Dự án</a><a href="#dich-vu">Dịch vụ</a><a href="#nang-luc">Năng lực</a><a href="#hanh-trinh">Hành trình</a><a href="#quy-trinh">Quy trình</a><a href="#hop-tac">Hợp tác</a></nav>
     <div class="lang" role="group" aria-label="Ngôn ngữ / Language"><button type="button" data-l="vi" aria-pressed="true">VI</button><button type="button" data-l="en" aria-pressed="false">EN</button></div>
   </header>
 
@@ -319,45 +353,59 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
       <div class="card reveal" style="--c:var(--a4)"><div class="kind">Web app</div><h3>Dashboard &amp; trang quản trị</h3>
         <ul class="get"><li>ReactJS hoặc Next.js nối với API có sẵn hoặc API mình viết (NestJS, Laravel, Node.js)</li><li>Đăng nhập, phân quyền, bảng dữ liệu, form, biểu đồ</li><li>Bàn giao source và hướng dẫn triển khai</li></ul>
         <div class="price" data-k="webapp">Báo giá theo yêu cầu</div><a class="go" href="#hop-tac">Nhận báo giá →</a></div>
+      <div class="card reveal" style="--c:var(--a4)"><div class="kind">Backend & API</div><h3>API & cơ sở dữ liệu</h3>
+        <ul class="get"><li>NestJS, Laravel hoặc Node.js, tùy dự án</li><li>JWT, upload file, thông báo đẩy, tài liệu Swagger</li><li>PostgreSQL, Docker, migration và dữ liệu mẫu</li></ul>
+        <div class="price" data-k="backend">Báo giá theo yêu cầu</div><a class="go" href="#hop-tac">Nhận báo giá →</a></div>
       <div class="card reveal" style="--c:var(--a1)"><div class="kind">Mobile</div><h3>App iOS &amp; Android</h3>
         <ul class="get"><li>React Native, Flutter hoặc Kotlin tùy bài toán</li><li>Thông báo đẩy, bản đồ, thanh toán, realtime khi dự án cần</li><li>Build, đưa lên App Store và Google Play, hỗ trợ sau phát hành</li></ul>
         <div class="price" data-k="mobile">Báo giá theo yêu cầu</div><a class="go" href="#hop-tac">Nhận báo giá →</a></div>
+      <div class="card reveal feat" style="--c:var(--a1)"><div class="kind">Trọn gói</div><h3>Từ API đến app, một đầu mối</h3>
+        <ul class="get"><li>API, trang admin và app iOS/Android do cùng một người làm</li><li>Không phải phối hợp nhiều bên, trao đổi ở một chỗ</li><li>Đã làm theo cách này ở SaviGold và DataDude</li></ul>
+        <div class="price" data-k="fullstack">Báo giá theo yêu cầu</div><a class="go" href="#hop-tac">Nhận báo giá →</a></div>
     </div>
+    <ul class="rules reveal"><li>Giá chốt theo hạng mục</li><li>Tiến độ chia theo mốc</li><li>Chi phí phát sinh báo trước</li></ul>
   </section>
 
   <section class="s" id="nang-luc">
-    <div class="sec-head reveal"><div class="eyebrow">Năng lực</div><h2>Mình làm được gì.</h2><p>Mỗi nhóm việc đều có sản phẩm thật phía sau, xem ở phần Dự án.</p></div>
-    <div class="skills">
-      <div class="skill reveal" style="--c:var(--a1)"><div class="ic">RN</div><h3>App React Native</h3><p>Expo, TypeScript, Redux hoặc MobX. Animation bằng Reanimated, tối ưu cho máy yếu.</p><ul class="tags"><li>Expo</li><li>Reanimated</li><li>React Query</li></ul></div>
-      <div class="skill reveal" style="--c:var(--a3)"><div class="ic">Fl</div><h3>Flutter &amp; Android</h3><p>Flutter với GetX và Firebase, đăng nhập Apple. Kotlin cho thiết bị chuyên dụng.</p><ul class="tags"><li>GetX</li><li>Jetpack</li><li>Coroutines</li></ul></div>
-      <div class="skill reveal" style="--c:var(--a4)"><div class="ic">API</div><h3>Backend &amp; admin</h3><p>NestJS có JWT, upload file, push notification, migration, Swagger. Admin bằng Next.js.</p><ul class="tags"><li>NestJS</li><li>Laravel</li><li>PostgreSQL</li><li>Docker</li></ul></div>
-      <div class="skill reveal" style="--c:var(--a2)"><div class="ic">Map</div><h3>Bản đồ &amp; realtime</h3><p>Mapbox GL: polygon, gom cụm, bản đồ offline, 3D. Socket.IO và định vị thời gian thực.</p><ul class="tags"><li>Mapbox GL</li><li>Socket.IO</li></ul></div>
-      <div class="skill reveal" style="--c:var(--a1)"><div class="ic">POS</div><h3>Thanh toán &amp; POS</h3><p>SDK PAX, Sunmi, Clover, Valor. In nhiệt ESC/POS, quét mã vạch, đồng bộ offline.</p><ul class="tags"><li>ESC/POS</li><li>Room</li><li>CameraX</li></ul></div>
-      <div class="skill reveal" style="--c:var(--a3)"><div class="ic">CI</div><h3>Phát hành</h3><p>Build iOS và Android, cập nhật nóng bằng CodePush, CI/CD cho mỗi bản phát hành.</p><ul class="tags"><li>CodePush</li><li>GitHub Actions</li><li>Bitrise</li></ul></div>
+    <div class="sec-head reveal"><div class="eyebrow">Năng lực</div><h2>Công nghệ mình làm được.</h2><p>Tất cả công nghệ mình đã dùng trong dự án thật.</p></div>
+    <div class="stack">
+      <div class="srow reveal" style="--c:var(--a2)"><div class="slabel">Ngôn ngữ</div><ul class="chips"><li>JavaScript</li><li>TypeScript</li><li>Kotlin</li><li>Java</li><li>PHP</li><li>C++</li><li>HTML</li><li>CSS</li></ul></div>
+      <div class="srow reveal" style="--c:var(--a1)"><div class="slabel">Mobile</div><ul class="chips"><li>React Native</li><li>Expo</li><li>Flutter</li><li>Android Native</li><li>Jetpack</li><li>Coroutines</li><li>Room</li><li>Reanimated</li><li>Redux</li><li>Redux-Saga</li><li>RTK Query</li><li>MobX</li><li>React Query</li><li>React Navigation</li><li>GetX</li><li>Dio</li><li>Biometric</li></ul></div>
+      <div class="srow reveal" style="--c:var(--a4)"><div class="slabel">Web & Frontend</div><ul class="chips"><li>ReactJS</li><li>Next.js</li><li>WordPress</li><li>Elementor</li><li>shadcn UI</li><li>Redux Toolkit</li></ul></div>
+      <div class="srow reveal" style="--c:var(--a3)"><div class="slabel">Backend & API</div><ul class="chips"><li>NestJS</li><li>Node.js</li><li>Laravel</li><li>RESTful API</li><li>JWT</li><li>Swagger</li><li>TypeORM</li><li>Sequelize</li><li>Socket.IO</li><li>WebSocket</li></ul></div>
+      <div class="srow reveal" style="--c:var(--a2)"><div class="slabel">Dữ liệu & Cloud</div><ul class="chips"><li>PostgreSQL</li><li>Firebase</li><li>FCM</li><li>Realtime Database</li><li>Docker</li><li>GCP (IAM, Secret Manager)</li><li>AWS IVS</li></ul></div>
+      <div class="srow reveal" style="--c:var(--a4)"><div class="slabel">Tích hợp</div><ul class="chips"><li>Stripe</li><li>Google Maps SDK</li><li>Mapbox GL</li><li>Sentry</li><li>Branch.io</li><li>Apple Sign-In</li><li>Push notification</li></ul></div>
+      <div class="srow reveal" style="--c:var(--a1)"><div class="slabel">POS & thiết bị</div><ul class="chips"><li>PAX SDK</li><li>Sunmi CPad</li><li>Clover SDK</li><li>Valor SDK</li><li>ESC/POS (Bluetooth/USB)</li><li>Máy in nhiệt</li><li>Ngăn kéo tiền</li><li>CameraX</li><li>ML Kit</li><li>Quét mã vạch / QR</li></ul></div>
+      <div class="srow reveal" style="--c:var(--a3)"><div class="slabel">Kiểm thử & phát hành</div><ul class="chips"><li>JUnit</li><li>Mockito</li><li>E2E UI test</li><li>GitHub Actions</li><li>Bitrise</li><li>CodePush</li><li>App Store</li><li>Google Play</li></ul></div>
+      <div class="srow reveal" style="--c:var(--a2)"><div class="slabel">Công cụ & quy trình</div><ul class="chips"><li>Git</li><li>Bitbucket</li><li>GitLab</li><li>Jira</li><li>Postman</li><li>Reactotron</li><li>Flipper</li><li>Lark</li><li>Agile/Scrum</li></ul></div>
+      <div class="srow reveal" style="--c:var(--a4)"><div class="slabel">AI hỗ trợ</div><ul class="chips"><li>Claude Code</li><li>Codex</li><li>Gemini</li><li>GitHub Copilot</li></ul></div>
     </div>
   </section>
 
-
-
-
-  <section class="s" id="quy-trinh">
-    <div class="sec-head reveal"><div class="eyebrow">Quy trình</div><h2>Sáu bước, mỗi bước có thứ để duyệt.</h2></div>
-    <ol class="flow">
-      <li class="reveal"><strong>Brief</strong>Hỏi lại các điểm chưa rõ</li>
-      <li class="reveal"><strong>Báo giá</strong>Theo hạng mục và tiến độ</li>
-      <li class="reveal"><strong>Prototype</strong>Khách duyệt trước khi code</li>
-      <li class="reveal"><strong>Phát triển</strong>Giao theo mốc, báo cáo định kỳ</li>
-      <li class="reveal"><strong>Kiểm thử</strong>Build iOS/Android, sửa lỗi</li>
-      <li class="reveal"><strong>Bàn giao</strong>Source, tài liệu, hỗ trợ sau bàn giao</li>
+  <section class="s" id="hanh-trinh">
+    <div class="sec-head reveal"><div class="eyebrow">Hành trình</div><h2>Hành trình làm việc.</h2><p>Gần 6 năm làm app, từ React Native và Kotlin đến full-stack.</p></div>
+    <ol class="path">
+      <li class="reveal" style="--c:var(--a1)"><div class="when">2026/03 – nay</div><div class="what"><h3>Rich POS</h3><div class="meta"><span class="badge">Công ty</span><span class="role2">Android Native (Kotlin)</span></div><p>Dựng app POS từ đầu cho máy PAX, Sunmi, Clover, Valor: máy in nhiệt, quét mã, bán hàng khi mất mạng, CI/CD.</p></div></li>
+      <li class="reveal" style="--c:var(--a3)"><div class="when">2025/09 – nay</div><div class="what"><h3>DataDude · Mobiland · SaviGold</h3><div class="meta"><span class="badge">Freelance</span><span class="role2">Full-stack: NestJS, React Native, Flutter</span></div><p>API, trang admin và app iOS/Android, làm trọn gói cho từng khách.</p></div></li>
+      <li class="reveal" style="--c:var(--a1)"><div class="when">2024/12 – nay</div><div class="what"><h3>RichSalon Ecosystem</h3><div class="meta"><span class="badge">Công ty</span><span class="role2">React Native · team 10</span></div><p>Check-in, Checkout và Salon POS cho Android, iOS, Clover. Làm từ khởi tạo đến phát hành, cập nhật nóng bằng CodePush.</p></div></li>
+      <li class="reveal" style="--c:var(--a4)"><div class="when">2024/07 – nay</div><div class="what"><h3>Megasop · Vietinter</h3><div class="meta"><span class="badge">Công ty</span><span class="role2">React Native</span></div><p>Ứng dụng DMS cho nhân viên bán hàng: Google Maps, vị trí thời gian thực, thông báo đẩy.</p></div></li>
+      <li class="reveal" style="--c:var(--a2)"><div class="when">2023/02 – 2024/03</div><div class="what"><h3>App Template · Salonlink</h3><div class="meta"><span class="badge">Công ty</span><span class="role2">React Native</span></div><p>Xây SDK lõi cho mobile và backend dùng chung nhiều app. Salonlink: app đặt lịch salon quanh khu vực.</p></div></li>
+      <li class="reveal" style="--c:var(--a4)"><div class="when">2022/08 – 2024/07</div><div class="what"><h3>BabyQuip</h3><div class="meta"><span class="badge">Công ty</span><span class="role2">React Native · team 14</span></div><p>App thuê đồ cho trẻ: luồng đặt thuê, Stripe, bản đồ, thông báo, unit test, tối ưu hiệu năng.</p></div></li>
+      <li class="reveal" style="--c:var(--a3)"><div class="when">2022/04 – 2022/08</div><div class="what"><h3>Inbea</h3><div class="meta"><span class="badge">Công ty</span><span class="role2">React Native</span></div><p>Tính năng livestream cho sàn thương mại điện tử bằng AWS IVS và WebSocket, review code trong team.</p></div></li>
+      <li class="reveal" style="--c:var(--a2)"><div class="when">2018/09 – 2022/06</div><div class="what"><h3>ĐH Công nghệ Thông tin, ĐHQG TP.HCM</h3><div class="meta"><span class="badge">Học vấn</span><span class="role2">Hệ thống thông tin</span></div><p>TOEIC 600 (2024). Đọc và nghe tiếng Anh tốt, giao tiếp trung cấp.</p></div></li>
     </ol>
   </section>
 
-  <section class="s">
-    <div class="sec-head reveal"><div class="eyebrow">Thêm về mình</div><h2>Học vấn và công cụ.</h2></div>
-    <div class="about">
-      <div class="card reveal"><h3>Học vấn</h3><ul><li>ĐH Công nghệ Thông tin, ĐHQG TP.HCM, ngành Hệ thống thông tin (2018–2022)</li><li>TOEIC 600 (2024)</li></ul></div>
-      <div class="card reveal"><h3>Công cụ hằng ngày</h3><ul><li>Agile/Scrum, Git, Postman, Reactotron, Flipper</li><li>Claude Code, Codex, Gemini, GitHub Copilot cho việc lặp lại</li><li>Đọc và nghe tiếng Anh tốt, giao tiếp trung cấp</li></ul></div>
-    </div>
+  <section class="s" id="quy-trinh">
+    <div class="sec-head reveal"><div class="eyebrow">Quy trình</div><h2>Sáu bước, mỗi bước có thứ để duyệt.</h2></div>
+    <ol class="flow2">
+      <li class="reveal"><span class="n">01</span><h3>Brief</h3><p>Hỏi lại các điểm chưa rõ</p><div class="ok"><b>Bạn duyệt</b><span>Phạm vi công việc</span></div></li>
+      <li class="reveal"><span class="n">02</span><h3>Báo giá</h3><p>Theo hạng mục và tiến độ</p><div class="ok"><b>Bạn duyệt</b><span>Bảng báo giá và các mốc</span></div></li>
+      <li class="reveal"><span class="n">03</span><h3>Prototype</h3><p>Khách duyệt trước khi code</p><div class="ok"><b>Bạn duyệt</b><span>Giao diện và luồng màn hình</span></div></li>
+      <li class="reveal"><span class="n">04</span><h3>Phát triển</h3><p>Giao theo mốc, báo cáo định kỳ</p><div class="ok"><b>Bạn duyệt</b><span>Từng mốc bàn giao</span></div></li>
+      <li class="reveal"><span class="n">05</span><h3>Kiểm thử</h3><p>Build iOS/Android, sửa lỗi</p><div class="ok"><b>Bạn duyệt</b><span>Bản chạy thử</span></div></li>
+      <li class="reveal"><span class="n">06</span><h3>Bàn giao</h3><p>Source, tài liệu, hỗ trợ sau bàn giao</p><div class="ok"><b>Bạn duyệt</b><span>Nghiệm thu cuối cùng</span></div></li>
+    </ol>
   </section>
 
   <div class="cta-band reveal" id="hop-tac">
@@ -374,7 +422,7 @@ section.s{padding-block:88px 24px;position:relative;z-index:2}
 <script>
 /* ===== LINKS: điền URL thật vào đây. Ô nào để trống sẽ tự ẩn. ===== */
 var PRICING={  // điền giá nếu muốn hiện, ví dụ 'Từ 3.000.000đ'. Để trống thì hiện 'Báo giá theo yêu cầu'
-  landing:'',wordpress:'',webapp:'',mobile:''
+  landing:'',wordpress:'',webapp:'',backend:'',mobile:'',fullstack:''
 };
 var LINKS={
   vlance:'',                       // hồ sơ vLance của bạn
@@ -398,6 +446,7 @@ var LINKS={
   Object.assign(EN,{"Dự án nổi bật.": "Featured projects.", "Các app và website mình đã tham gia làm. Bấm vào ảnh app để xem màn hình thật.": "Apps and websites I have worked on. Tap an app image to see its real screens.", "Gửi brief cho mình. Mình trả lời kèm bản báo giá theo hạng mục, và luôn hỏi trước ba điều này:": "Send me your brief. I reply with a quote by scope item, and always ask these three things first:", "Mình làm được gì.": "What I can do.", "Mỗi nhóm việc đều có sản phẩm thật phía sau, xem ở phần Dự án.": "Every group of work has a real product behind it, shown in Projects."});
   Object.assign(EN,{"app đã lên App Store / Google Play":"apps live on the App Store / Google Play","năm full-stack: NestJS, Next.js, WordPress":"year of full-stack: NestJS, Next.js, WordPress","Nhắn Zalo":"Message on Zalo"});
   Object.assign(EN,{"Xem ảnh":"View screens",});
+  Object.assign(EN,{"NestJS, Laravel hoặc Node.js, tùy dự án": "NestJS, Laravel or Node.js, whichever fits", "JWT, upload file, thông báo đẩy, tài liệu Swagger": "JWT, file upload, push notifications, Swagger docs", "PostgreSQL, Docker, migration và dữ liệu mẫu": "PostgreSQL, Docker, migrations and seed data", "Backend & API": "Backend & API", "API & cơ sở dữ liệu": "API & database", "API, trang admin và app iOS/Android do cùng một người làm": "API, admin panel and iOS/Android app built by one person", "Không phải phối hợp nhiều bên, trao đổi ở một chỗ": "No juggling between vendors, one place to talk", "Đã làm theo cách này ở SaviGold và DataDude": "Done this way for SaviGold and DataDude", "Trọn gói": "End to end", "Từ API đến app, một đầu mối": "From API to app, one point of contact", "Giá chốt theo hạng mục": "Fixed price per scope item", "Tiến độ chia theo mốc": "Progress split into milestones", "Chi phí phát sinh báo trước": "Extra costs flagged beforehand", "Ngôn ngữ": "Languages", "Mobile": "Mobile", "Web & Frontend": "Web & Frontend", "Dữ liệu & Cloud": "Data & Cloud", "Tích hợp": "Integrations", "POS & thiết bị": "POS & hardware", "Kiểm thử & phát hành": "Testing & release", "Công cụ & quy trình": "Tools & process", "AI hỗ trợ": "AI assistants", "Máy in nhiệt": "Thermal printer", "Ngăn kéo tiền": "Cash drawer", "Quét mã vạch / QR": "Barcode / QR scanning", "Năng lực": "Skills", "Công nghệ mình làm được.": "Technologies I work with.", "Tất cả công nghệ mình đã dùng trong dự án thật.": "Everything I have used in real projects.", "2026/03 – nay": "2026/03 – now", "Công ty": "Company", "Android Native (Kotlin)": "Android Native (Kotlin)", "Dựng app POS từ đầu cho máy PAX, Sunmi, Clover, Valor: máy in nhiệt, quét mã, bán hàng khi mất mạng, CI/CD.": "Built the POS app from scratch for PAX, Sunmi, Clover and Valor terminals: thermal printing, code scanning, offline selling, CI/CD.", "2025/09 – nay": "2025/09 – now", "Freelance": "Freelance", "Full-stack: NestJS, React Native, Flutter": "Full-stack: NestJS, React Native, Flutter", "API, trang admin và app iOS/Android, làm trọn gói cho từng khách.": "API, admin panel and iOS/Android app, delivered end to end for each client.", "2024/12 – nay": "2024/12 – now", "React Native · team 10": "React Native · team of 10", "Check-in, Checkout và Salon POS cho Android, iOS, Clover. Làm từ khởi tạo đến phát hành, cập nhật nóng bằng CodePush.": "Check-in, Checkout and Salon POS for Android, iOS and Clover. Built from init to release, hot updates through CodePush.", "2024/07 – nay": "2024/07 – now", "React Native": "React Native", "Ứng dụng DMS cho nhân viên bán hàng: Google Maps, vị trí thời gian thực, thông báo đẩy.": "DMS apps for sales staff: Google Maps, real-time location, push notifications.", "Xây SDK lõi cho mobile và backend dùng chung nhiều app. Salonlink: app đặt lịch salon quanh khu vực.": "Built core mobile and backend SDKs shared by several apps. Salonlink: a salon booking app by area.", "React Native · team 14": "React Native · team of 14", "App thuê đồ cho trẻ: luồng đặt thuê, Stripe, bản đồ, thông báo, unit test, tối ưu hiệu năng.": "Baby gear rental app: booking flow, Stripe, maps, notifications, unit tests, performance work.", "Tính năng livestream cho sàn thương mại điện tử bằng AWS IVS và WebSocket, review code trong team.": "Livestream for an e-commerce platform with AWS IVS and WebSocket, code reviews in the team.", "Học vấn": "Education", "Hệ thống thông tin": "Information Systems", "TOEIC 600 (2024). Đọc và nghe tiếng Anh tốt, giao tiếp trung cấp.": "TOEIC 600 (2024). Good English reading and listening, intermediate speaking.", "ĐH Công nghệ Thông tin, ĐHQG TP.HCM": "University of Information Technology, VNU-HCM", "Hành trình": "Career path", "Hành trình làm việc.": "Career path.", "Gần 6 năm làm app, từ React Native và Kotlin đến full-stack.": "Nearly 6 years building apps, from React Native and Kotlin to full-stack.", "Bạn duyệt": "You approve", "Phạm vi công việc": "Scope of work", "Bảng báo giá và các mốc": "Quote and milestones", "Giao diện và luồng màn hình": "Design and screen flow", "Từng mốc bàn giao": "Each milestone", "Bản chạy thử": "The test build", "Nghiệm thu cuối cùng": "Final acceptance", "Brief": "Brief", "Prototype": "Prototype"});
   Object.assign(EN,{"Dịch vụ": "Services", "Dịch vụ & báo giá": "Services & quotes", "Bạn cần gì, mình báo giá theo đó.": "Tell me what you need, I quote to match.", "Mỗi việc có phạm vi rõ ràng. Giá chốt theo hạng mục, kèm tiến độ và chi phí phát sinh nếu có.": "Every job has a clear scope. Prices are fixed per item, with the timeline and any extra costs stated.", "Landing page": "Landing page", "Trang giới thiệu & bán hàng": "Marketing & sales page", "Thiết kế theo brief của bạn, hiển thị tốt trên điện thoại": "Designed from your brief and looks right on phones", "Form liên hệ, nút gọi hành động, thẻ tiêu đề và mô tả cơ bản": "Contact form, call-to-action buttons, basic title and description tags", "Tối ưu tốc độ tải, bàn giao kèm hướng dẫn sửa nội dung": "Tuned for load speed, handed over with a guide to editing content", "Báo giá theo yêu cầu": "Quote on request", "Nhận báo giá →": "Get a quote →", "WordPress": "WordPress", "Website nhiều trang": "Multi-page website", "Cài đặt, chọn theme, dựng các trang theo cấu trúc bạn duyệt": "Setup, theme choice and pages built to a structure you approve", "Bạn tự đăng bài và sửa nội dung được, không cần biết code": "You can post and edit content yourself, no code needed", "Plugin riêng nếu cần tính năng đặc thù, bàn giao quyền quản trị và tài liệu": "A custom plugin if you need a special feature, with admin access and documentation handed over", "Web app": "Web app", "Dashboard & trang quản trị": "Dashboards & admin panels", "ReactJS hoặc Next.js nối với API có sẵn hoặc API mình viết (NestJS, Laravel, Node.js)": "ReactJS or Next.js connected to your existing API or one I write (NestJS, Laravel, Node.js)", "Đăng nhập, phân quyền, bảng dữ liệu, form, biểu đồ": "Login, roles, data tables, forms, charts", "Bàn giao source và hướng dẫn triển khai": "Source code and deployment guide handed over", "Mobile": "Mobile", "App iOS & Android": "iOS & Android apps", "React Native, Flutter hoặc Kotlin tùy bài toán": "React Native, Flutter or Kotlin depending on the problem", "Thông báo đẩy, bản đồ, thanh toán, realtime khi dự án cần": "Push notifications, maps, payments and realtime when the project needs them", "Build, đưa lên App Store và Google Play, hỗ trợ sau phát hành": "Builds, publishing to the App Store and Google Play, post-release support", "Để báo giá nhanh và sát, mình cần từ bạn": "To quote quickly and accurately, I need from you", "Mục tiêu: bán hàng, giới thiệu công ty hay nhận khách đăng ký?": "Goal: sell, introduce the company or collect sign-ups?", "Số trang hoặc số chức năng chính, càng cụ thể càng tốt": "Number of pages or main features, as specific as possible", "1 đến 2 trang web bạn thích để mình tham khảo phong cách": "One or two sites you like, so I can see your taste", "Đã có logo, nội dung, tên miền và hosting chưa?": "Do you already have a logo, content, domain and hosting?", "Mốc cần hoàn thành": "Deadline you need"});
   Object.assign(EN,{"Phạm Văn Nhơn · Mobile · Web · Full-stack · TP. Hồ Chí Minh": "Phạm Văn Nhơn · Mobile · Web · Full-stack · Ho Chi Minh City", "Web & app": "Web & apps", "đã chạy thật,": "already live,", "Gần 6 năm làm app mobile (React Native, Flutter, Kotlin) và 1 năm full-stack với NestJS, Next.js, React, WordPress. Một người lo trọn API, trang web, trang admin và app.": "Nearly 6 years building mobile apps (React Native, Flutter, Kotlin) and 1 year of full-stack with NestJS, Next.js, React and WordPress. One person covers the API, the website, the admin panel and the app.", "mảng việc: mobile · web · backend · POS": "areas: mobile · web · backend · POS", "người lo từ API đến store và trang web": "person from API to store and website", "Chín việc mình làm lặp đi lặp lại.": "Nine things I do again and again.", "Website & WordPress": "Websites & WordPress", "Website giới thiệu, WordPress tùy biến, plugin tự viết, Elementor, dựng bằng Docker và WP-CLI.": "Company websites, custom WordPress, self-written plugins, Elementor, built with Docker and WP-CLI.", "Web app & dashboard": "Web apps & dashboards", "ReactJS và Next.js cho trang admin, dashboard, form và bảng dữ liệu, nối thẳng với API.": "ReactJS and Next.js for admin panels, dashboards, forms and data tables, wired straight to the API.", "Laravel & Node.js": "Laravel & Node.js", "API và trang quản trị bằng PHP (Laravel) hoặc Node.js khi dự án cần.": "APIs and admin panels in PHP (Laravel) or Node.js when a project needs them.", "Web": "Web", "Cả web cũng làm trọn.": "Web, end to end too.", "Từ website giới thiệu đến trang quản trị, nối thẳng với API của app.": "From company websites to admin panels, wired straight to the app API.", "Freelance · Admin panel": "Freelance · Admin panel", "Trang admin SaviGold": "SaviGold admin panel", "Dashboard Next.js cho dữ liệu giá vàng, Sổ vàng và chat cộng đồng, dựng trên bộ giao diện Next.js và shadcn UI, nối với API NestJS.": "A Next.js dashboard for gold price data, the Gold Book and community chat, built on a Next.js and shadcn UI kit, wired to the NestJS API.", "Dự án cá nhân · WordPress": "Personal project · WordPress", "Website học tiếng Nhật có plugin quiz và flashcard tự viết, kèm script cài đặt tự động và bản sao lưu.": "A Japanese-learning website with a self-written quiz and flashcard plugin, plus an automated setup script and backups.", "Nhận làm": "Available for", "Web cho dự án của bạn": "Web for your project", "Website giới thiệu, landing page, trang đăng nhập và quản trị. Bạn mô tả việc cần làm, mình dựng và bàn giao kèm tài liệu.": "Company websites, landing pages, login and admin pages. You describe the job, I build it and hand it over with documentation.", "Gửi brief web →": "Send a web brief →", "Bạn cần app (iOS, Android), website, hay cả hai?": "Do you need an app (iOS, Android), a website, or both?"});ENC=Object.assign(ENC,{"Thuê đồ cho bé": "Baby gear", "Ngày nhận → ngày trả": "Pickup → return", "Xe đẩy em bé": "Stroller", "Cũi / nôi": "Crib", "Ghế ăn dặm": "High chair", "Đặt thuê": "Reserve", "Đã xác nhận ✓": "Confirmed ✓"});
   Object.assign(EN,{"Công ty · Đặt thuê đồ cho trẻ": "Company · Baby gear rental", "Gia đình cần thuê đồ cho trẻ khi đi du lịch, đặt lịch và nhắn với nhà cung cấp ngay trong app.": "Families need to rent gear for kids while travelling, book dates and message the provider right in the app.", "Tham gia từ đầu đến khi phát hành trong team 14 người: phát triển luồng đặt thuê, tích hợp Stripe và Google Maps SDK, thông báo đẩy, Socket.io, theo dõi lỗi bằng Sentry, viết unit test và tối ưu hiệu năng.": "Joined from the start through release in a team of 14: built the rental booking flow, integrated Stripe and the Google Maps SDK, push notifications, Socket.io, Sentry error tracking, unit tests and performance tuning.", "App React Native chạy trên iOS và Android, đã có trên App Store và Google Play.": "A React Native app on iOS and Android, live on the App Store and Google Play.", "App đặt lịch hoặc marketplace có thanh toán Stripe và bản đồ.": "Booking apps or marketplaces with Stripe payments and maps."});
